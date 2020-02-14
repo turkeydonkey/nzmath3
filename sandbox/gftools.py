@@ -3,7 +3,7 @@ gftools.py - efficiently interpreter tools for Galois fields.
 function symbols starting with ``u_'' means ``unstable'', use sandbox version
 of finitefield (module sandbox.finitefield).
 """
-from __future__ import division
+
 import logging
 import operator
 
@@ -21,7 +21,7 @@ def PolynomialoverGF(fieldrepr, coeffs, symbol="#1"):
     """ Create OneVariablePolynomial from coeffs with mapping
      FinitePrimeField(char).createElement.
     """
-    if isinstance(fieldrepr, (int, long)):
+    if isinstance(fieldrepr, int):
         field = finitefield.FinitePrimeField(fieldrepr)
     elif isinstance(fieldrepr, (finitefield.FinitePrimeField,
                                 finitefield.FiniteExtendedField)):
@@ -30,7 +30,7 @@ def PolynomialoverGF(fieldrepr, coeffs, symbol="#1"):
     if type(coeffs) is dict:
         return polynomial.OneVariableSparsePolynomial(coeffs, symbol, field)
     elif type(coeffs) is list:
-        coefficients=map(field.createElement, coeffs)
+        coefficients=list(map(field.createElement, coeffs))
         return polynomial.OneVariableDensePolynomial(coefficients, symbol)
 
 def GaloisField(char, modulus=None):

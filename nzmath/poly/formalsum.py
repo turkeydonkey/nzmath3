@@ -99,7 +99,7 @@ class FormalSumContainerInterface (object):
         """
         return not self.__eq__(other)
 
-    def __nonzero__(self):
+    def __bool__(self):
         """
         Return True, if self has some nonzero coefficients.
         False, otherwise.
@@ -128,7 +128,7 @@ class FormalSumContainerInterface (object):
                 sum_coeff[base] += coeff
             else:
                 sum_coeff[base] = coeff
-        return self.construct_with_default([(b, c) for (b, c) in sum_coeff.iteritems() if c])
+        return self.construct_with_default([(b, c) for (b, c) in sum_coeff.items() if c])
 
     def __sub__(self, other):
         """
@@ -140,7 +140,7 @@ class FormalSumContainerInterface (object):
                 sub_coeff[base] -= coeff
             else:
                 sub_coeff[base] = -coeff
-        return self.construct_with_default([(b, c) for (b, c) in sub_coeff.iteritems() if c])
+        return self.construct_with_default([(b, c) for (b, c) in sub_coeff.items() if c])
 
     def __neg__(self):
         """
@@ -336,19 +336,19 @@ class DictFormalSum (FormalSumContainerInterface):
         """
         iterator for (base, coefficient) pairs.
         """
-        return self._data.iteritems()
+        return iter(self._data.items())
 
     def itercoefficients(self):
         """
         iterator for coefficients.
         """
-        return self._data.itervalues()
+        return iter(self._data.values())
 
     def iterbases(self):
         """
         iterator for bases.
         """
-        return self._data.iterkeys()
+        return iter(self._data.keys())
 
     def __len__(self):
         """

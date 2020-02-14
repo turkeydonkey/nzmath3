@@ -89,7 +89,7 @@ class FactoringMethod (object):
         Return False if the given number is equal to one.
         Otherwise, raise ValueError.
         """
-        if isinstance(number, (int, long)):
+        if isinstance(number, int):
             if number == 1:
                 return False
             if number > 1:

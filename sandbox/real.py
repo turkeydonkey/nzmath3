@@ -6,7 +6,7 @@ utilities.  The functions provided are corresponding to the math
 standard module.
 """
 
-from __future__ import division
+
 import itertools
 import warnings
 
@@ -23,7 +23,7 @@ class Real(ring.FieldElement):
     This class is only for consistency for other Ring object.
     """
 
-    convertable = (Float, int, long, rational.Rational)
+    convertable = (Float, int, int, rational.Rational)
 
     def __init__(self, value):
         """
@@ -145,7 +145,7 @@ class RealField(ring.Field):
     def __contains__(self, element):
         if isinstance(element, Constant):
             element = element.cache
-        if isinstance(element, (int, long, float, Float, Real, rational.Rational)):
+        if isinstance(element, (int, float, Float, Real, rational.Rational)):
             return True
         else:
             try:
@@ -349,7 +349,7 @@ class ExponentialPowerSeries(object):
         Generator of terms of series with assigned x value.
         """
         if x == 0:
-            yield rational.Rational(self.iterator.next())
+            yield rational.Rational(next(self.iterator))
         else:
             i = 0
             r = rational.Rational(1, 1)
@@ -360,7 +360,7 @@ class ExponentialPowerSeries(object):
 
     def __call__(self, x, maxerror):
         if self.dirtyflag:
-            raise Exception, 'ExponentialPowerSeries cannot be called more than once'
+            raise Exception('ExponentialPowerSeries cannot be called more than once')
         self.dirtyflag = True
         value, oldvalue = rational.Rational(0), rational.Rational(0)
         maxDenom = minNumer = 0
@@ -855,7 +855,7 @@ def pow(x, y, err=defaultError):
     """
     x ** y
     """
-    if isinstance(y, (int, long)):
+    if isinstance(y, int):
         return rational.Rational(x) ** y
     return exp(y * log(x, err=err), err)
 
@@ -932,7 +932,7 @@ def EulerTransform(iterator):
     l = -1
     for term in iterator:
         stock.append(term)
-        for i in xrange(l, -1, -1):
+        for i in range(l, -1, -1):
             stock[i] += stock[i+1]
         yield b * stock[0]
         b /= 2

@@ -5,7 +5,7 @@ The module provides higher level interfaces to univar classes and
 functions.
 """
 
-from __future__ import division
+
 import logging
 import nzmath.arith1 as arith1
 import nzmath.bigrandom as bigrandom
@@ -156,7 +156,7 @@ class DivisionProvider(object):
             populate = True
         else:
             i = min(self._reduced.keys())
-            while i in self._reduced.keys():
+            while i in list(self._reduced.keys()):
                 i += 1
             if i < upperbound:
                 populate = True
@@ -187,7 +187,7 @@ class DivisionProvider(object):
             return polynom
         elif polynom.degree() == 0:
             return self.getRing().createElement([(0, polynom[0]**index)])
-        acoefficient = polynom.itercoefficients().next()
+        acoefficient = next(polynom.itercoefficients())
         one = ring.getRing(acoefficient).one
         power_product = self.construct_with_default([(0, one)])
         if index:
@@ -206,7 +206,7 @@ class DivisionProvider(object):
         degree, lc is of self, and self._reduced is populated up to
         the given upperbound.
         """
-        one = ring.getRing(self.itercoefficients().next()).one
+        one = ring.getRing(next(self.itercoefficients())).one
         if not self._reduced:
             minimum = degree
             redux = self.construct_with_default([(degree - 1, one)])
@@ -258,7 +258,7 @@ class DivisionProvider(object):
             else:
                 redux = self._reduced[stride]
             binary[stride] = redux
-        binarykeys = sorted(binary.keys(), reverse=True)
+        binarykeys = sorted(list(binary.keys()), reverse=True)
         for deg in (d for d in degrees if d > maxreduced):
             pickup = []
             rest = deg
@@ -760,7 +760,7 @@ class PrimeCharacteristicFunctionsProvider(object):
                       DivisionProvider,
                       Polynomial):
         """
-        if not isinstance(index, (int, long)):
+        if not isinstance(index, int):
             raise TypeError("index must be an integer.")
         if index < 0:
             raise ValueError("index must be a non-negative integer.")
@@ -779,7 +779,7 @@ class PrimeCharacteristicFunctionsProvider(object):
                 powered = self
         if index == 1:
             return powered
-        acoefficient = self.itercoefficients().next()
+        acoefficient = next(self.itercoefficients())
         one = ring.getRing(acoefficient).one
         power_product = self.construct_with_default([(0, one)])
         if index:
@@ -802,7 +802,7 @@ class PrimeCharacteristicFunctionsProvider(object):
             return polynom
         elif polynom.degree() == 0:
             return self.getRing().createElement([(0, polynom[0]**index)])
-        acoefficient = polynom.itercoefficients().next()
+        acoefficient = next(polynom.itercoefficients())
         cardfq = card(ring.getRing(acoefficient))
         final_product = self.getRing().one
         qpow = polynom
@@ -869,7 +869,7 @@ class PrimeCharacteristicFunctionsProvider(object):
         if self.order.degree(f) > 0:
             f = f.pthroot()
             subresult = f.squarefree_decomposition()
-            for i, g in subresult.iteritems():
+            for i, g in subresult.items():
                 result[i*self.ch] = g
         return result
 
@@ -894,7 +894,7 @@ class PrimeCharacteristicFunctionsProvider(object):
         The given polynomial must be square free, and its coefficient
         ring must be a finite field.
         """
-        Fq = ring.getRing(self.itercoefficients().next())
+        Fq = ring.getRing(next(self.itercoefficients()))
         q = card(Fq)
         f = self
         x = f.construct_with_default([(1, Fq.one)])
@@ -921,7 +921,7 @@ class PrimeCharacteristicFunctionsProvider(object):
         given degree.
         """
         r = self.order.degree(self) // degree
-        Fq = ring.getRing(self.itercoefficients().next())
+        Fq = ring.getRing(next(self.itercoefficients()))
         q = card(Fq)
         p = Fq.getCharacteristic()
         if degree == 1:
@@ -979,9 +979,9 @@ class PrimeCharacteristicFunctionsProvider(object):
             self = self.scalar_exact_division(lc)
             result.append((self.getRing().one*lc, 1))
         squarefreefactors = self.squarefree_decomposition()
-        for m, f in squarefreefactors.iteritems():
+        for m, f in squarefreefactors.items():
             distinct_degree_factors = f.distinct_degree_factorization()
-            for d, g in distinct_degree_factors.iteritems():
+            for d, g in distinct_degree_factors.items():
                 if d == self.order.degree(g):
                     result.append((g, m))
                 else:
@@ -1081,7 +1081,7 @@ class KaratsubaProvider(object):
         data_length = len(self)
         # monomial
         if data_length == 1:
-            d, c = iter(self).next()
+            d, c = next(iter(self))
             if d:
                 return polynomial([(d*2, c**2)])
             else:
@@ -1196,8 +1196,8 @@ class RingPolynomial(OrderProvider,
         if coeffring is None:
             raise TypeError("argument `coeffring' is required")
         coefficients = dict(coefficients)
-        if coefficients and coefficients.itervalues().next() not in coeffring:
-            coefficients = [(d, coeffring.createElement(c)) for (d, c) in coefficients.iteritems()]
+        if coefficients and next(iter(coefficients.values())) not in coeffring:
+            coefficients = [(d, coeffring.createElement(c)) for (d, c) in coefficients.items()]
             _sorted = False
         kwds["coeffring"] = coeffring
         univar.SortedPolynomial.__init__(self, coefficients, _sorted, **kwds)
@@ -1368,7 +1368,7 @@ class IntegerPolynomial(UniqueFactorizationDomainPolynomial):
     """
     def __init__(self, coefficients, coeffring=None, _sorted=False, **kwds):
         dc = dict(coefficients)
-        coefficients = [(d, rational.IntegerIfIntOrLong(c)) for (d, c) in dc.iteritems()]
+        coefficients = [(d, rational.IntegerIfIntOrLong(c)) for (d, c) in dc.items()]
         UniqueFactorizationDomainPolynomial.__init__(self, coefficients, coeffring, _sorted, **kwds)
 
     def normalize(self):
@@ -1651,7 +1651,7 @@ def init_coefficient_ring(coefficients):
     coefficients is a dictionary whose values are the coefficients.
     """
     myRing = None
-    for c in coefficients.itervalues():
+    for c in coefficients.values():
         cring = ring.getRing(c)
         if not myRing or myRing != cring and myRing.issubring(cring):
             myRing = cring

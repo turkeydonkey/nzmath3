@@ -1,4 +1,4 @@
-from __future__ import division
+
 import unittest
 from nzmath.module import *
 import nzmath.vector as vector
@@ -30,25 +30,25 @@ class SubmoduleTest(unittest.TestCase):
         self.zero = Submodule(2, 1, [vect([0, 0])]) # zero module
 
     def testIsSubmodule(self):
-        self.assert_(self.a1.isSubmodule(self.a2))
-        self.assert_(self.a4.isSubmodule(self.a2))
-        self.assert_(not(self.a2.isSubmodule(self.a3)))
-        self.assert_(not(self.a3.isSubmodule(self.a2)))
-        self.assert_(self.a1.isSubmodule(self.a4)) #equal
-        self.assert_(self.a4.isSubmodule(self.a1))
+        self.assertTrue(self.a1.isSubmodule(self.a2))
+        self.assertTrue(self.a4.isSubmodule(self.a2))
+        self.assertTrue(not(self.a2.isSubmodule(self.a3)))
+        self.assertTrue(not(self.a3.isSubmodule(self.a2)))
+        self.assertTrue(self.a1.isSubmodule(self.a4)) #equal
+        self.assertTrue(self.a4.isSubmodule(self.a1))
     
     def testIsEqual(self):
-        self.assert_(self.a1.isEqual(self.a4))
+        self.assertTrue(self.a1.isEqual(self.a4))
         a6_2 = Submodule(2, 2, [vect([3, 2]), vect([1, 2])])
-        self.assert_(self.a6.isEqual(a6_2))
-        self.assert_(a6_2.isEqual(self.a6))
-        self.assert_(self.a6.isEqual(self.a6)) # trivial
-        self.assert_(not(self.a2.isEqual(self.a3)))
+        self.assertTrue(self.a6.isEqual(a6_2))
+        self.assertTrue(a6_2.isEqual(self.a6))
+        self.assertTrue(self.a6.isEqual(self.a6)) # trivial
+        self.assertTrue(not(self.a2.isEqual(self.a3)))
     
     def testIsContains(self):
-        self.assert_(self.a1.isContains(vect([2, 4])))
-        self.assert_(self.a3.isContains(vect([-16, 0])))
-        self.assert_(not(self.a3.isContains(vect([4, 0]))))
+        self.assertTrue(self.a1.isContains(vect([2, 4])))
+        self.assertTrue(self.a3.isContains(vect([-16, 0])))
+        self.assertTrue(not(self.a3.isContains(vect([4, 0]))))
     
     def testToHNF(self):
         a1_copy = Submodule.fromMatrix(self.a1)
@@ -69,34 +69,34 @@ class SubmoduleTest(unittest.TestCase):
     
     def testSumOfSubmodules(self):
         a1_sum_a2 = Submodule(2, 2, [vect([1, 2]), vect([3, 4])])
-        self.assert_(self.a1.sumOfSubmodules(self.a2).isEqual(a1_sum_a2))
+        self.assertTrue(self.a1.sumOfSubmodules(self.a2).isEqual(a1_sum_a2))
         a2_sum_a3 = Submodule(2, 2, [vect([1, 0]), vect([0, 1])])
-        self.assert_(self.a2.sumOfSubmodules(self.a3).isEqual(a2_sum_a3))
+        self.assertTrue(self.a2.sumOfSubmodules(self.a3).isEqual(a2_sum_a3))
         a3_sum_a7 = Submodule(2, 2, [vect([2, 0]), vect([0, 1])])
-        self.assert_(self.a3.sumOfSubmodules(self.a7).isEqual(a3_sum_a7))
+        self.assertTrue(self.a3.sumOfSubmodules(self.a7).isEqual(a3_sum_a7))
         # trivial test
-        self.assert_(self.a4.sumOfSubmodules(self.a4_hnf).isEqual(self.a4))
+        self.assertTrue(self.a4.sumOfSubmodules(self.a4_hnf).isEqual(self.a4))
         # direct product
-        self.assert_(self.a8.sumOfSubmodules(self.a9).isEqual(self.a2))
+        self.assertTrue(self.a8.sumOfSubmodules(self.a9).isEqual(self.a2))
     
     def testIntersectionOfSubmodules(self):
         a1_intersect_a2 = Submodule(2, 1, [vect([1, 2])])
-        self.assert_(
+        self.assertTrue(
             self.a1.intersectionOfSubmodules(self.a2).isEqual(
             a1_intersect_a2))
         a2_intersect_a3 = Submodule(2, 2, [vect([8, 0]), vect([4, 2])])
-        self.assert_(
+        self.assertTrue(
             self.a2.intersectionOfSubmodules(self.a3).isEqual(
             a2_intersect_a3))
         a3_intersect_a7 = Submodule(2, 2, [vect([40, 0]), vect([36, 2])])
-        self.assert_(
+        self.assertTrue(
             self.a3.intersectionOfSubmodules(self.a7).isEqual(
             a3_intersect_a7))
         # trivial test
-        self.assert_(self.a4.intersectionOfSubmodules(
+        self.assertTrue(self.a4.intersectionOfSubmodules(
             self.a4_hnf).isEqual(self.a4))
         # direct product
-        self.assert_(self.a8.intersectionOfSubmodules(self.a9).isEqual(
+        self.assertTrue(self.a8.intersectionOfSubmodules(self.a9).isEqual(
             self.zero))
 
     def testRepresent_element(self):
@@ -183,32 +183,32 @@ class ModuleTest(unittest.TestCase):
         self.assertEqual(self.b1, b1_2)
         b1_false_1 = Module([ [vect([3, 0]), vect([0, 5])], 30 ], 
             self.Q_rt_2)
-        self.assert_(not(self.b1 == b1_false_1))
+        self.assertTrue(not(self.b1 == b1_false_1))
         b1_false_2 = Module([ [vect([3, 0]), vect([0, 4])], 2 ], 
             self.Q_rt_2)
-        self.assert_(not(self.b1 == b1_false_2))
+        self.assertTrue(not(self.b1 == b1_false_2))
         b6_1 = Module([ [vect([3, 0, 0]), vect([0, 2, 0])], 1], 
             self.Q_cube_3)
         self.assertEqual(self.b6, b6_1) #trivial
 
     def testContains(self):
         b1_vect = field_ele([[3, 5], 1], self.Q_rt_2.polynomial)
-        self.assert_(b1_vect in self.b1)
+        self.assertTrue(b1_vect in self.b1)
         b3_vect = field_ele([[25, 49], 5], self.Q_rt_minus_3.polynomial)
-        self.assert_(b3_vect in self.b3)
+        self.assertTrue(b3_vect in self.b3)
         b5_vect = field_ele([[-3, 3], 4], self.Q_rt_minus_3.polynomial)
-        self.assert_(b5_vect in self.b5)
+        self.assertTrue(b5_vect in self.b5)
         b6_false_vect_1 = field_ele([[3, 2, 1], 1], self.Q_cube_3.polynomial)
-        self.assert_(b6_false_vect_1 not in self.b6)
+        self.assertTrue(b6_false_vect_1 not in self.b6)
         b6_false_vect_2 = field_ele([[1, 2, 0], 1], self.Q_cube_3.polynomial)
-        self.assert_(b6_false_vect_2 not in self.b6)
+        self.assertTrue(b6_false_vect_2 not in self.b6)
         b6_false_vect_3 = field_ele([[3, 2, 0], 2], self.Q_cube_3.polynomial)
-        self.assert_(b6_false_vect_3 not in self.b6)
+        self.assertTrue(b6_false_vect_3 not in self.b6)
         # other type test
         b7_base_vect_1 = vect([0, ra(1, 2)]) # vect repr w.r.t. base
-        self.assert_(b7_base_vect_1 in self.b7)
+        self.assertTrue(b7_base_vect_1 in self.b7)
         b7_base_vect_2 = [ vect([4, 1]), 2 ] # list repr w.r.t. base
-        self.assert_(b7_base_vect_2 in self.b7)
+        self.assertTrue(b7_base_vect_2 in self.b7)
 
     def testAdd(self):
         
@@ -250,9 +250,9 @@ class ModuleTest(unittest.TestCase):
         self.assertEqual(b2_intersect, self.b2.intersect(self.b2_add))
 
     def testIssubmodule(self):
-        self.assert_(self.b1_add.issubmodule(self.b1))
-        self.assert_(not(self.b2_add.issubmodule(self.b2)))
-        self.assert_(not(self.b2.issubmodule(self.b2_add)))
+        self.assertTrue(self.b1_add.issubmodule(self.b1))
+        self.assertTrue(not(self.b2_add.issubmodule(self.b2)))
+        self.assertTrue(not(self.b2.issubmodule(self.b2_add)))
 
     def testRepresent_element(self):
         b2_vect = field_ele([[7, 23], 5], self.Q_rt_2.polynomial)
@@ -289,11 +289,11 @@ class IdealTest(unittest.TestCase):
     def testInverse(self):
         one_Q_rt_2 = Ideal([ [vect([1, 0]), vect([0, 1])], 1 ],
                            self.Q_rt_2, self.Q_rt_2.integer_ring())
-        self.assert_(self.b2 * self.b2.inverse() == one_Q_rt_2)
+        self.assertTrue(self.b2 * self.b2.inverse() == one_Q_rt_2)
         one_Q_rt_minus_3 = Ideal([ [vect([1, 0]), vect([0, 1])], 1],
                                  self.Q_rt_minus_3,
                                  self.Q_rt_minus_3.integer_ring())
-        self.assert_(self.b3 * self.b3.inverse() == one_Q_rt_minus_3)
+        self.assertTrue(self.b3 * self.b3.inverse() == one_Q_rt_minus_3)
 
 class Ideal_with_generatorTest(unittest.TestCase):
     def setUp(self):

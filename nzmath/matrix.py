@@ -1,7 +1,8 @@
-from __future__ import division
+
 
 import nzmath.ring as ring
 import nzmath.vector as vector
+from functools import reduce
 
 
 class Matrix(object):
@@ -20,8 +21,8 @@ class Matrix(object):
         """
         initialize matrix.
         """
-        if (isinstance(row, (int, long))
-            and isinstance(column, (int, long))
+        if (isinstance(row, int)
+            and isinstance(column, int)
             and row > 0
             and column > 0 ): # row and column check
             self.row = row
@@ -87,7 +88,7 @@ class Matrix(object):
                 if not(isinstance(ring.getRing(self.compo[0][0]), coeff_ring.__class__)):
                     compos = []
                     for i in range(self.row):
-                        compos.append(map(coeff_ring.createElement, self.compo[i]))
+                        compos.append(list(map(coeff_ring.createElement, self.compo[i])))
                     self.compo = compos
         else:
             raise ValueError("invalid value for matrix size")
@@ -114,7 +115,7 @@ class Matrix(object):
         """
         if isinstance(index, tuple):
             return self.compo[index[0] - 1][index[1] - 1]
-        elif isinstance(index, (int, long)):
+        elif isinstance(index, int):
             return self.getColumn(index)
         else:
             raise IndexError("Matrix invalid index: %s" % index)
@@ -126,7 +127,7 @@ class Matrix(object):
         """
         if isinstance(key, tuple):
             self.compo[key[0] - 1][key[1] - 1] = value
-        elif isinstance(key, (int, long)):
+        elif isinstance(key, int):
             self.setColumn(key, value)
         else:
             raise TypeError(self.__setitem__.__doc__)
@@ -163,7 +164,7 @@ class Matrix(object):
         """
         return not (self == other)
 
-    def __nonzero__(self):
+    def __bool__(self):
         """
         Check self != zeromatrix
         """
@@ -224,7 +225,7 @@ class Matrix(object):
         """
         compos = []
         for i in range(self.row):
-            compos = compos + (map(function, self.compo[i]))
+            compos = compos + (list(map(function, self.compo[i])))
         return createMatrix(self.row, self.column, compos)
 
     def reduce(self, function, initializer=None):
@@ -438,7 +439,7 @@ class Matrix(object):
         """
         if J == None:
             J = I
-        if isinstance(I, (int, long)) and isinstance(J, (int, long)):
+        if isinstance(I, int) and isinstance(J, int):
             mat = self.copy()
             mat.deleteRow(I)
             mat.deleteColumn(J)
@@ -874,7 +875,7 @@ class RingSquareMatrix(SquareMatrix, RingMatrix, ring.RingElement):
         powering self to integer.
         """
         n = +other
-        if not isinstance(n, (int, long)):
+        if not isinstance(n, int):
             raise TypeError("index must be an integer")
         power = unitMatrix(self.row, self.coeff_ring)
         # check n
@@ -1780,7 +1781,7 @@ class Subspace(FieldMatrix):
         n = self.row
         k = self.column
         M = self.copy()
-        pnt = range(1, self.row + 1)
+        pnt = list(range(1, self.row + 1))
         for s in range(1, k + 1):
             for t in range(s, n + 1):
                 if M[t, s]:
@@ -1901,7 +1902,7 @@ def zeroMatrix(row, column=None, coeff=0):
     if column == 0:
         coeff = 0
         column = row
-    if not(isinstance(column, (int, long))):
+    if not(isinstance(column, int)):
         if column == None:
             column = row
         else:

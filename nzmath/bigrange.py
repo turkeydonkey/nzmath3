@@ -23,13 +23,13 @@ def range(start, stop=None, step=None):
     """
     if step is None:
         step = 1
-    elif not isinstance(step, (int, long)):
+    elif not isinstance(step, int):
         raise ValueError("non-integer step for range()")
-    if not isinstance(start, (int, long)):
+    if not isinstance(start, int):
         raise ValueError("non-integer arg 1 for range()")
     if stop is None:
         start, stop = 0, start
-    elif not isinstance(stop, (int, long)):
+    elif not isinstance(stop, int):
         raise ValueError("non-integer stop for range()")
 
     if step > 0:

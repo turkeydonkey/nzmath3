@@ -1,4 +1,4 @@
-from __future__ import division
+
 import unittest
 import logging
 import nzmath.equation as equation
@@ -136,7 +136,7 @@ class LocalEquationTest (unittest.TestCase):
         for s in solutions:
             self.assertEqual(0, (2 + s**3) % 43)
         thesolutions = [9, 11, 23]
-        self.assertEquals(len(thesolutions), len(solutions))
+        self.assertEqual(len(thesolutions), len(solutions))
         for s in thesolutions:
             self.assertTrue(s in solutions)
 

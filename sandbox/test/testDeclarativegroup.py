@@ -42,10 +42,10 @@ class S3Test (unittest.TestCase):
         i.e., the string is in the Kleene closure.
         """
         # valid strings
-        self.assert_("abaBbAbabababbbabaaaababbaabb" in self.S3)
-        self.assert_("" in self.S3)
+        self.assertTrue("abaBbAbabababbbabaaaababbaabb" in self.S3)
+        self.assertTrue("" in self.S3)
         # an invalid string
-        self.assert_("abaBbAbabababbbabdaaababbaabb" not in self.S3)
+        self.assertTrue("abaBbAbabababbbabdaaababbaabb" not in self.S3)
 
     def testOp2(self):
         """
@@ -102,10 +102,10 @@ class F7MultiplicativeTest (unittest.TestCase):
         """
         F7 = finitefield.FinitePrimeField.getInstance(7)
         # valid elements
-        self.assert_(F7.one in self.F7m)
-        self.assert_(F7.createElement(3) in self.F7m)
+        self.assertTrue(F7.one in self.F7m)
+        self.assertTrue(F7.createElement(3) in self.F7m)
         # an invalid element
-        self.assert_(F7.zero not in self.F7m)
+        self.assertTrue(F7.zero not in self.F7m)
 
     def testOp2(self):
         """

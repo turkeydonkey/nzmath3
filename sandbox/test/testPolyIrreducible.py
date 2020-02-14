@@ -25,15 +25,15 @@ class IrreducibleTest (unittest.TestCase):
         """
 	test by Dumas's method
 	"""
-        self.assert_(irreducible.dumas(self.f1, 3))
-        self.assert_(irreducible.dumas(self.f2, 3))
+        self.assertTrue(irreducible.dumas(self.f1, 3))
+        self.assertTrue(irreducible.dumas(self.f2, 3))
         self.assertEqual(None, irreducible.dumas(self.f2, 2))
 
     def testPerron(self):
         """
 	test by Perron's method
 	"""
-        self.assert_(irreducible.perron(self.f1))
+        self.assertTrue(irreducible.perron(self.f1))
         self.assertEqual(None, irreducible.perron(self.f2), "non-monic")
 
     def testOsada(self):
@@ -42,14 +42,14 @@ class IrreducibleTest (unittest.TestCase):
 	"""
         self.assertEqual(None, irreducible.osada(self.f1), "constant is small")
         self.assertEqual(None, irreducible.osada(self.f2), "non-monic")
-        self.assert_(irreducible.osada(self.f3))
+        self.assertTrue(irreducible.osada(self.f3))
         self.assertEqual(None, irreducible.osada(self.f4), "composite constant")
 
     def testPolya(self):
         """
 	test by Osada's method
 	"""
-        self.assert_(irreducible.polya(self.f5))
+        self.assertTrue(irreducible.polya(self.f5))
         self.assertEqual(False, irreducible.polya(self.f5 + 1))
 
 

@@ -148,9 +148,9 @@ class PolynomialIteratorTest (unittest.TestCase):
         terms = [(0, 1), (1, 4), (2, 4), (4, 6), (5, 12), (8, 9)]
         self.assertEqual(terms, [t for t in self.b.iterterms()])
         self.assertEqual(terms, [t for t in self.s.iterterms()])
-        zipped = zip(self.b.iterbases(), self.b.itercoefficients())
+        zipped = list(zip(self.b.iterbases(), self.b.itercoefficients()))
         self.assertEqual(zipped, [t for t in self.b.iterterms()])
-        zipped = zip(self.s.iterbases(), self.s.itercoefficients())
+        zipped = list(zip(self.s.iterbases(), self.s.itercoefficients()))
         self.assertEqual(zipped, [t for t in self.s.iterterms()])
 
     def testIter(self):

@@ -1,4 +1,4 @@
-from __future__ import division
+
 # standard modules
 import itertools
 # NZMATH modules
@@ -155,7 +155,7 @@ class Complex (ring.FieldElement):
     def __neg__(self):
         return self.__class__(-self.real, -self.imag)
 
-    def __nonzero__(self):
+    def __bool__(self):
         return bool(self.real or self.imag)
 
     def __repr__(self):
@@ -465,7 +465,7 @@ class ExponentialPowerSeries:
         Generator of terms of series with assigned x value.
         """
         if x == 0:
-            yield self.iterator.next()
+            yield next(self.iterator)
         else:
             f = rational.Integer(1)
             i = 0
@@ -478,7 +478,7 @@ class ExponentialPowerSeries:
 
     def __call__(self, x, maxerror):
         if self.dirtyflag:
-            raise Exception, 'ExponentialPowerSeries cannot be called more than once'
+            raise Exception('ExponentialPowerSeries cannot be called more than once')
         self.dirtyflag = True
         value = oldvalue = 0
         for t in self.terms(x):

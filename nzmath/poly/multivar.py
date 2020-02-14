@@ -6,7 +6,7 @@ one tries to manipulate its underlying data attributes, immutability
 will be able to be broken.
 """
 
-from __future__ import division
+
 import logging
 import warnings
 import nzmath.ring as _ring
@@ -188,7 +188,7 @@ class BasicPolynomial(PolynomialInterface):
         coefficients can be any dict initial values.
         """
         PolynomialInterface.__init__(self)
-        self._coefficients = dict([(TermIndices(i), c) for (i, c) in dict(coefficients).iteritems()])
+        self._coefficients = dict([(TermIndices(i), c) for (i, c) in dict(coefficients).items()])
         if "number_of_variables" in kwds:
             self.number_of_variables = kwds.pop("number_of_variables")
         else:
@@ -236,7 +236,7 @@ class BasicPolynomial(PolynomialInterface):
                     mul_coeff[indices] += cs*co
                 else:
                     mul_coeff[indices] = cs*co
-        return self.construct_with_default([(d, c) for (d, c) in mul_coeff.iteritems() if c])
+        return self.construct_with_default([(d, c) for (d, c) in mul_coeff.items() if c])
 
     def scalar_mul(self, scale):
         """
@@ -251,7 +251,7 @@ class BasicPolynomial(PolynomialInterface):
         or as a Polynomial instance.
         """
         if isinstance(term, PolynomialInterface):
-            degrees, coeff = iter(term).next()
+            degrees, coeff = next(iter(term))
         else:
             degrees, coeff = term
         return self.construct_with_default([(d + degrees, c * coeff) for (d, c) in self])
@@ -347,7 +347,7 @@ class BasicPolynomial(PolynomialInterface):
         scalar.
         """
         result = {}
-        if isinstance(target, (int, long)):
+        if isinstance(target, int):
             for i, c in self:
                 deg, index = i[target], i[:target] + (0,) + i[target + 1:]
                 if index in result:
@@ -361,7 +361,7 @@ class BasicPolynomial(PolynomialInterface):
             return substituted
         else:
             raise TypeError("argument lengths mismatsch")
-        return self.__class__([(i, c) for (i, c) in result.iteritems() if c], **self._init_kwds)
+        return self.__class__([(i, c) for (i, c) in result.items() if c], **self._init_kwds)
 
     def __len__(self):
         """
@@ -380,19 +380,19 @@ class BasicPolynomial(PolynomialInterface):
         """
         iterator for (degree, coefficient) pairs.
         """
-        return self._coefficients.iteritems()
+        return iter(self._coefficients.items())
 
     def itercoefficients(self):
         """
         iterator for coefficients.
         """
-        return self._coefficients.itervalues()
+        return iter(self._coefficients.values())
 
     def iterbases(self):
         """
         iterator for degrees.
         """
-        return self._coefficients.iterkeys()
+        return iter(self._coefficients.keys())
 
     def partial_differentiate(self, target):
         """
@@ -406,7 +406,7 @@ class BasicPolynomial(PolynomialInterface):
             index_diffed[target] -= 1
             index_diffed = tuple(i)
             partial[index_diffed] = target_degree * c
-        return self.construct_with_default([(i, c) for (i, c) in partial.iteritems() if c])
+        return self.construct_with_default([(i, c) for (i, c) in partial.items() if c])
 
     def erase_variable(self, target=0):
         """
@@ -425,7 +425,7 @@ class BasicPolynomial(PolynomialInterface):
             else:
                 result[term] = coeff
 
-        return self.__class__([(d, c) for (d, c) in result.iteritems() if c],
+        return self.__class__([(d, c) for (d, c) in result.items() if c],
                               number_of_variables=(self.number_of_variables - 1),
                               **self._init_kwds)
 
@@ -440,9 +440,9 @@ class BasicPolynomial(PolynomialInterface):
         result = {}
         for i, c in self:
             result[i[target]] = result.get(i[target], zero) + self.__class__([(i, c)], **self._init_kwds)
-        for i, c in result.iteritems():
+        for i, c in result.items():
             result[i] = c.erase_variable(target)
-        return result.items()
+        return list(result.items())
 
     def __repr__(self): # debug use
         return "BasicPolynomial(%s)" % repr(self._coefficients)

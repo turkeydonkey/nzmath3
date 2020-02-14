@@ -6,7 +6,7 @@ This module is reference design for finite field characteristic two.
 but I recommend that this field should be used only checking Python syntax.
 """
 
-from __future__ import division
+
 import logging
 import operator
 
@@ -66,7 +66,7 @@ class PythonExpressionFieldElement(finitefield.FiniteFieldElement):
     __rtruediv__ = __div__
     __rfloordiv__ = __div__
 
-    def __nonzero__(self):
+    def __bool__(self):
         return not self.boolean
 
     def __pow__(self, index):
@@ -147,7 +147,7 @@ class PythonExpressionField(finitefield.FiniteField):
             return True
         return False
 
-    def __nonzero__(self):
+    def __bool__(self):
         return True
 
     # properties

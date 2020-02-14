@@ -1,7 +1,7 @@
 """ Elliptic Curves over finite field. 
 """
 
-from __future__ import division
+
 import logging
 
 import nzmath.arith1 as arith1
@@ -45,7 +45,7 @@ class ECGeneric:
             if isinstance(basefield, rational.RationalField) or (not basefield):
                 character = 0
                 self.basefield = rational.theRationalField
-            elif isinstance(basefield, (int,long)):
+            elif isinstance(basefield, int):
                 character = basefield
                 if character == 1 or character < 0:
                     raise ValueError("basefield characteristic must be 0 or prime.")
@@ -159,7 +159,7 @@ class ECGeneric:
                        rational.Rational(self.a6+V[1]*self.a4+V[1]**2*self.a2+V[1]**3-V[3]*self.a3-V[3]**2-V[1]*V[3]*self.a1, V[0]**6)])
         else:
             for v in V:
-                if not isinstance(v, (int, long)) or not (v in self.basefield):
+                if not isinstance(v, int) or not (v in self.basefield):
                     raise ValueError("transform V must be integer sequence.")
             v = self.basefield.createElement(V[0]).inverse()
             return EC([(self.a1+2*V[2])*v,
@@ -458,7 +458,7 @@ class ECoverGF(ECGeneric):
             field = basefield
         except AttributeError:
             # backward compatibility
-            if isinstance(basefield, (int, long)):
+            if isinstance(basefield, int):
                 field = finitefield.FinitePrimeField.getInstance(basefield)
                 character = basefield
             else:
@@ -467,7 +467,7 @@ class ECoverGF(ECGeneric):
         coeffs_list = []
         if isinstance(coefficient, list):
             for c in coefficient:
-                if isinstance(c, (int, long)):
+                if isinstance(c, int):
                     coeff = field.createElement(c)
                 elif c in field:
                     coeff = c
@@ -1259,7 +1259,7 @@ class ECoverGF(ECGeneric):
             j = j+1
         R = self.mul(2*m, P)
         k = -m
-        Plist_rev = map(self.mul, [-1]*(m+1), Plist) # make reverse point mapping
+        Plist_rev = list(map(self.mul, [-1]*(m+1), Plist)) # make reverse point mapping
         j = 0
         while k <= m:
             S = self.add(Q, self.mul(k, R))
@@ -1552,7 +1552,7 @@ def EC(coefficient, basefield=None):
         if isinstance(basefield, rational.RationalField) or not basefield:
             field = rational.RationalField
             character = 0
-        elif isinstance(basefield, (int, long)):
+        elif isinstance(basefield, int):
             field = finitefield.FinitePrimeField(basefield)
             character = basefield
         else:

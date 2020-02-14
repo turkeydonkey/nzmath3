@@ -25,7 +25,7 @@ class Aleph(object):
     def __lt__(self, other):
         if isinstance(other, Aleph):
             return self.index < other.index
-        elif isinstance(other, (int, long)):
+        elif isinstance(other, int):
             return False
         else:
             return NotImplemented
@@ -33,7 +33,7 @@ class Aleph(object):
     def __le__(self, other):
         if isinstance(other, Aleph):
             return self.index <= other.index
-        elif isinstance(other, (int, long)):
+        elif isinstance(other, int):
             return False
         else:
             return NotImplemented
@@ -47,7 +47,7 @@ class Aleph(object):
     def __ge__(self, other):
         if isinstance(other, Aleph):
             return self.index >= other.index
-        elif isinstance(other, (int, long)):
+        elif isinstance(other, int):
             return True
         else:
             return NotImplemented
@@ -55,7 +55,7 @@ class Aleph(object):
     def __gt__(self, other):
         if isinstance(other, Aleph):
             return self.index > other.index
-        elif isinstance(other, (int, long)):
+        elif isinstance(other, int):
             return True
         else:
             return NotImplemented

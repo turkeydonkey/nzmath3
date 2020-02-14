@@ -9,25 +9,25 @@ nzmath_year = '2008'
 import os
 startupfile = os.environ.get('PYTHONSTARTUP')
 if startupfile and os.path.isfile(startupfile):
-    execfile(startupfile)
+    exec(compile(open(startupfile, "rb").read(), startupfile, 'exec'))
 
 del os
 del startupfile
 
 ############## print copyright
-print "  N  Z  M  A  T  H"
-print "Version " + nzmath_version
-print "Python based number theory oriented calculation system"
-print "Developed at Tokyo Metropolitan University"
-print ""
-print "Copyright (c) 2003-" + nzmath_year + ", NZMATH development group"
-print "All rights reserved."
-print "Please read LICENSE.txt for detail."
-print ""
-print ""
-print "NZMATH is provided as a Python library package named 'nzmath'"
-print "(Use just as a usual package)"
-print ""
+print("  N  Z  M  A  T  H")
+print("Version " + nzmath_version)
+print("Python based number theory oriented calculation system")
+print("Developed at Tokyo Metropolitan University")
+print("")
+print("Copyright (c) 2003-" + nzmath_year + ", NZMATH development group")
+print("All rights reserved.")
+print("Please read LICENSE.txt for detail.")
+print("")
+print("")
+print("NZMATH is provided as a Python library package named 'nzmath'")
+print("(Use just as a usual package)")
+print("")
 
 del nzmath_year, nzmath_version
 

@@ -35,7 +35,7 @@ class MultiplicativeSet:
                 return self.identity
             else:
                 raise TypeError("%s don't have identity" % self.__class__.__name__)
-        idx = long(index)
+        idx = int(index)
         if index == idx:
             if index < 0:
                 if hasattr(self, isinvertible) and self.isinvertible():
@@ -79,7 +79,7 @@ class MultiplicativeSet:
         powering by using left-right binary method.
         This method don't call 'identity'
         """
-        spot = 1 << (long(math.log(index, 2)) - 1)
+        spot = 1 << (int(math.log(index, 2)) - 1)
         sol = element
         while spot:
             sol = self.square(sol)
@@ -116,7 +116,7 @@ class MultiplicativeSet:
         size is selected by average analystic optimization
         """
         # Find the proper size
-        log_n = long(math.log(index, 2))
+        log_n = int(math.log(index, 2))
         size = 1
         pow_size = 1
         while log_n > (size + 1) * (size + 2) * pow_size:
@@ -199,7 +199,7 @@ class MultiplicativeSet:
         (Algorithm 1.2.4.1 & 1.2.4.2 of Cohen's book)
         size is selected by average analystic optimization
         """
-        log_n = long(math.log(index, 2))
+        log_n = int(math.log(index, 2))
         # Find the proper window size
         size = 1
         pow_size = 1
@@ -242,7 +242,7 @@ class MultiplicativeSet:
         powering by using small-window method
         window size is selected by average analystic optimization
         """
-        log_n = long(math.log(index, 2))
+        log_n = int(math.log(index, 2))
         # Find the proper window size
         size = 2
         pow_size = 2

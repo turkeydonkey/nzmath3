@@ -2,7 +2,7 @@
 p-adic numbers and their rings / fields
 """
 
-from __future__ import division
+
 import nzmath.arith1 as arith1
 import nzmath.rational as rational
 import nzmath.ring as ring
@@ -52,20 +52,20 @@ class FinitePrecisionPadicInteger (BasePadicInteger):
         The third argument power is a power index of modulus, by which
         the representation is finite.
         """
-        if isinstance(initial, (int, long)):
+        if isinstance(initial, int):
             cutoff = p ** power
             # taking modulo cutoff is useful for nagative integers.
             self.expansion = tuple(arith1.expand(initial % cutoff, p))
         else:
             # take only first 'power' elements of initial.
-            self.expansion = tuple([e for i, e in zip(xrange(power), initial)])
+            self.expansion = tuple([e for i, e in zip(range(power), initial)])
         self.p = p
 
-    def __nonzero__(self):
+    def __bool__(self):
         """
         True for non-zero.
         """
-        if filter(None, self.expansion):
+        if [_f for _f in self.expansion if _f]:
             return True
         return False
 

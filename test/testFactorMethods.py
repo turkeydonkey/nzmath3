@@ -77,7 +77,7 @@ class TrialDivisionTest (unittest.TestCase):
         # fail to factor is iterator is short
         factorization_of_10201 = tdm.factor(10201,
                                             return_type='tracker',
-                                            iterator=iter(range(3, 100, 2)))
+                                            iterator=iter(list(range(3, 100, 2))))
         self.assertTrue(10201 in factorization_of_10201.primality) # not factored
         self.assertFalse(factorization_of_10201.primality[10201]) # not a prime
 

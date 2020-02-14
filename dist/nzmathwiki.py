@@ -2,13 +2,13 @@
 This program creates manual for NZMATH from NZMATH wiki.
 """
 
-from HTMLParser import HTMLParser
+from html.parser import HTMLParser
 import datetime
 import os
 import sys
-import urllib
-import urlparse
-import htmlentitydefs
+import urllib.request, urllib.parse, urllib.error
+import urllib.parse
+import html.entities
 import nzmath.compatibility
 
 #------ global variable
@@ -54,7 +54,7 @@ def getHeader(files):
     head += '<a href="'
     head += convertDocURL(files)
     #head += '">?' + urllib.unquote(files) + '</a></h1>' + '\n'
-    head += '">' + urllib.unquote(files) + '</a></h1>' + '\n'
+    head += '">' + urllib.parse.unquote(files) + '</a></h1>' + '\n'
     head += '</div>' + '\n'
     return head
 
@@ -74,7 +74,7 @@ def convertFileName(url):
     """
     convert url to local file name.(FileNameToFile is essential)
     """
-    split_url = urlparse.urlparse(url)
+    split_url = urllib.parse.urlparse(url)
     try:
         if split_url[1] == basepla:
             if split_url[4] in del_list:
@@ -111,37 +111,37 @@ def convertWikiURL(files):
     """
     convert file to wiki address.
     """
-    return urlparse.urlunsplit( ('http', basepla, basewiki, files, '') )
+    return urllib.parse.urlunsplit( ('http', basepla, basewiki, files, '') )
 
 def convertWikiHPURL(files):
     """
     convert file to wiki address (but not wiki form).
     """
-    return urlparse.urlunsplit( ('http', basepla, basewiki + files, '', '') )
+    return urllib.parse.urlunsplit( ('http', basepla, basewiki + files, '', '') )
 
 def convertDocURL(files):
     """
     convert file to document(manual address) address.
     """
-    return urlparse.urlunsplit( ('http', basepla, basedoc, files, '') )
+    return urllib.parse.urlunsplit( ('http', basepla, basedoc, files, '') )
 
 def convertHPURL(files):
     """
     convert file to NZMATH homepage address.
     """
-    return urlparse.urlunsplit( ('http', HPpla, HPdoc + files, '', '') )
+    return urllib.parse.urlunsplit( ('http', HPpla, HPdoc + files, '', '') )
 
 def convertEntity(data):
     """
     convert 2byte character to HTML entity. 
     """
-    txt = unicode(str(data), 'euc_jp')
-    sol = u''
+    txt = str(str(data), 'euc_jp')
+    sol = ''
     for char in txt:
         num = ord(char)
         if num > 127:
             try:
-                sol += '&' + htmlentitydefs.codepoint2name[num] + ';'
+                sol += '&' + html.entities.codepoint2name[num] + ';'
             except:
                 sol += char
         else:
@@ -162,7 +162,7 @@ def retryConnection(func, *args, **kw):
             if try_num >= retry:
                 raise IOError
             if p_out:
-                print "retry connection..."
+                print("retry connection...")
             os.system('sleep ' +  str(sleeptime))
     return web_file
 
@@ -194,7 +194,7 @@ class MyWikiParser(HTMLParser):
             self.up = False
         self.f = file(conv, 'w')
         if p_out:
-            print "make from " + self.url
+            print("make from " + self.url)
         self.deal = False
         HTMLParser.__init__(self)
 
@@ -273,7 +273,7 @@ class MyWikiParser(HTMLParser):
                 if tag == 'img':
                     #raise NoneOutput
                     if attrs[1][0] == 'src':
-                        parse = urlparse.urlparse(attrs[1][0])
+                        parse = urllib.parse.urlparse(attrs[1][0])
                         if parse[0] == '':
                             imgpage = convertWikiHPURL(self.files + attrs[1][1])
                             imgfile = attrs[1][1]
@@ -281,8 +281,8 @@ class MyWikiParser(HTMLParser):
                             imgpage = attrs[1][1]
                             imgfile = parse[2]
                         if p_out:
-                            print "get img from " + imgpage
-                        retryConnection(urllib.urlretrieve, imgpage, imgname)
+                            print("get img from " + imgpage)
+                        retryConnection(urllib.request.urlretrieve, imgpage, imgname)
                 self.f.write(back_to_tag(tag, p_attrs)[:-1] + ' />')
             except NoneOutput:
                 pass
@@ -312,7 +312,7 @@ class MyWikiParser(HTMLParser):
         HTMLParser.close(self)
 
     def feeds(self):
-        HTMLParser.feed(self, retryConnection(urllib.urlopen, self.url).read())
+        HTMLParser.feed(self, retryConnection(urllib.request.urlopen, self.url).read())
 
 #------ preparation
 def main(base_path):
@@ -324,9 +324,9 @@ def main(base_path):
         if not(os.path.exists(base_path)):
             ans = 'y'
             if p_out:
-                print "Do you want to create " + base_path + "?(y/n)"
+                print("Do you want to create " + base_path + "?(y/n)")
                 ans = sys.stdin.read(1)
-                print ""
+                print("")
             if ans in ('y', 'Y'):
                 pass
             elif ans in ('n', 'N'):
@@ -338,9 +338,9 @@ def main(base_path):
             if os.path.exists(m_path):
                 ans = 'y'
                 if p_out:
-                    print "Do you want to remove " + m_path + "?(y/n)"
+                    print("Do you want to remove " + m_path + "?(y/n)")
                     ans = sys.stdin.read(1)
-                    print ""
+                    print("")
                 if ans in ('y', 'Y'):
                     for root, dirs, files in os.walk(m_path, topdown=False):
                         for name in files:
@@ -357,32 +357,32 @@ def main(base_path):
         os.chdir(os.path.join(base_path, 'nzmath/manual/'))
         csspage = convertHPURL('manual/default.css')
         if p_out:
-            print "get css from " + csspage
-        retryConnection(urllib.urlretrieve, csspage, 'default.css')
+            print("get css from " + csspage)
+        retryConnection(urllib.request.urlretrieve, csspage, 'default.css')
         while ad_list:
             files = ad_list.pop()
             MyWikiParser(files).feeds()
         if p_out:
-            print "\n" + "All process is done!" + "\n"
-            print "Ok, now created nzmath-current manual located to"
-            print os.path.join(base_path, "nzmath")
-            print "if you check difference between nzmath-cvs manual, with GNU diff,"
-            print "$ diff -ubBr /tmp/nzmath/manual {your-nzmathcvs-repo}/manual"
-            print "or you check only new version files,"
-            print "$ diff -r --brief /tmp/nzmath/manual {your-nzmathcvs-repo}/manual ."
+            print("\n" + "All process is done!" + "\n")
+            print("Ok, now created nzmath-current manual located to")
+            print(os.path.join(base_path, "nzmath"))
+            print("if you check difference between nzmath-cvs manual, with GNU diff,")
+            print("$ diff -ubBr /tmp/nzmath/manual {your-nzmathcvs-repo}/manual")
+            print("or you check only new version files,")
+            print("$ diff -r --brief /tmp/nzmath/manual {your-nzmathcvs-repo}/manual .")
     except NoneOutput:
         if p_out:
-            print 'end.'
+            print('end.')
     except InputError:
-        print "Error: Invalid input!"
+        print("Error: Invalid input!")
     except LookupError:
-        print "Error: Maybe, Japanese encodings(ex.euc_jp) is not supported."
+        print("Error: Maybe, Japanese encodings(ex.euc_jp) is not supported.")
     except:
         if p_out:
-            print "Check " + base_path + " (dir? truly path? and so on.)"
-            print "Delete " + base_path + " and try again."
-            print "(Maybe, caused by problem of network connection)\n"
-        print sys.exc_info()[0]
+            print("Check " + base_path + " (dir? truly path? and so on.)")
+            print("Delete " + base_path + " and try again.")
+            print("(Maybe, caused by problem of network connection)\n")
+        print(sys.exc_info()[0])
     os.chdir(current)
 
 #------ start!

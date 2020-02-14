@@ -3,61 +3,61 @@ import logging
 
 from nzmath import *
 
-import testAlgfield
-import testAlgorithm
-import testArith1
-import testArygcd
-import testBigrandom
-import testBigrange
-import testCombinatorial
-import testCompatibility
-import testCubic_root
-import testEcpp
-import testElliptic
-import testEquation
-import testFiniteField
-import testGcd
-import testGroup
-import testImaginary
-import testIntresidue
+from . import testAlgfield
+from . import testAlgorithm
+from . import testArith1
+from . import testArygcd
+from . import testBigrandom
+from . import testBigrange
+from . import testCombinatorial
+from . import testCompatibility
+from . import testCubic_root
+from . import testEcpp
+from . import testElliptic
+from . import testEquation
+from . import testFiniteField
+from . import testGcd
+from . import testGroup
+from . import testImaginary
+from . import testIntresidue
 #import testIntegerResidueClass deprecated
-import testLattice
-import testMatrix
-import testModule
-import testMultiplicative
-import testPermute
+from . import testLattice
+from . import testMatrix
+from . import testModule
+from . import testMultiplicative
+from . import testPermute
 #import testPolynomial deprecated
-import testPlugins
-import testPrime
-import testPrime_decomp
-import testQuad
-import testRational
+from . import testPlugins
+from . import testPrime
+from . import testPrime_decomp
+from . import testQuad
+from . import testRational
 #import testRationalFunction deprecated
-import testReal
-import testRing
-import testRound2
-import testSequence
-import testSquarefree
-import testVector
+from . import testReal
+from . import testRing
+from . import testRound2
+from . import testSequence
+from . import testSquarefree
+from . import testVector
 #import testZassenhaus deprecated
 # nzmath.factor
-import testFactorUtil
-import testFactorMpqs
-import testFactorEcm
-import testFactorMethods
-import testFactorMisc
+from . import testFactorUtil
+from . import testFactorMpqs
+from . import testFactorEcm
+from . import testFactorMethods
+from . import testFactorMisc
 # nzmath.poly
-import testFormalsum
-import testTermOrder
-import testUnivar
-import testUniutil
-import testMultivar
-import testMultiutil
-import testPolyFactor
-import testPolyHensel
-import testPolyRing
-import testRatfunc
-import testGroebner
+from . import testFormalsum
+from . import testTermOrder
+from . import testUnivar
+from . import testUniutil
+from . import testMultivar
+from . import testMultiutil
+from . import testPolyFactor
+from . import testPolyHensel
+from . import testPolyRing
+from . import testRatfunc
+from . import testGroebner
 
 
 def suite():

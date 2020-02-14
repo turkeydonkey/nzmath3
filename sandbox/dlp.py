@@ -3,7 +3,7 @@ DLP --- discrete logarithm problem
 
 DLP for Finite Field.
 """
-from __future__ import division
+
 import nzmath.arith1 as arith1
 import nzmath.factor.misc as factor_misc
 
@@ -49,5 +49,5 @@ def SilverPohligHellman(target, base, p):
             del log_mod_factor[p_i]
 
     if len(log_mod_factor) == 1:
-        return log_mod_factor.values()[0]
-    return arith1.CRT([(r, p) for (p, r) in log_mod_factor.items()])
+        return list(log_mod_factor.values())[0]
+    return arith1.CRT([(r, p) for (p, r) in list(log_mod_factor.items())])

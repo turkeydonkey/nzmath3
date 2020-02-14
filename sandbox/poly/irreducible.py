@@ -52,7 +52,7 @@ def dumas(target, p):
     # (II)
     #(segments[degree] - segments[0]) / degree * x + segment[0] < segments[x]
     slope = segments[degree] - segments[0]
-    if all(slope * x <= degree * (v - segments[0]) for x, v in segments.iteritems()):
+    if all(slope * x <= degree * (v - segments[0]) for x, v in segments.items()):
         return True
     # the criterion doesn't work
     return None

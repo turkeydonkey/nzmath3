@@ -213,9 +213,9 @@ class array_poly():
         fft_mul = [ ]
         for i in range( bound ):
             fft_mul.append( fft_mul1[ i ] * fft_mul2[ i ] )
-        print fft_mul
+        print(fft_mul)
         total = reverse_FFT( fft_mul , bound )
-        print total
+        print(total)
         return array_poly( total )
 
 
@@ -232,7 +232,7 @@ class array_poly_mod(array_poly):
         mod: initializer for coefficients modulo mod
         """
         if mod <= 0:
-            raise ValueError , " Please input a natural number in 'mod'. "
+            raise ValueError(" Please input a natural number in 'mod'. ")
         mod_coefficients = [ i % mod for i in coefficients ]
         array_poly.__init__( self , mod_coefficients )
         self.mod = mod
@@ -250,7 +250,7 @@ class array_poly_mod(array_poly):
         self + other
         """
         if self.mod != other.mod:
-            raise ValueError , "  "
+            raise ValueError("  ")
         add = array_poly.__add__( self , other )
         return array_poly_mod(add.coefficients,self.mod)
 
@@ -259,7 +259,7 @@ class array_poly_mod(array_poly):
         self - other
         """
         if self.mod != other.mod:
-            raise ValueError , "  "
+            raise ValueError("  ")
         sub = array_poly.__sub__( self , other )
         return array_poly_mod( sub.coefficients , self.mod )
 
@@ -291,7 +291,7 @@ class array_poly_mod(array_poly):
         self == other
         """
         if self.mod != other.mod:
-            raise ValueError , "  "
+            raise ValueError("  ")
         eq = array_poly.__eq__( self , other )
         return eq
     
@@ -300,7 +300,7 @@ class array_poly_mod(array_poly):
         self != other
         """
         if self.mod != other.mod:
-            raise ValueError , "  "
+            raise ValueError("  ")
         ne = array_poly.__ne__( self , other )
         return ne
 
@@ -309,7 +309,7 @@ class array_poly_mod(array_poly):
         self * other
         """
         if self.mod != other.mod:
-            raise ValueError , "  "
+            raise ValueError("  ")
         total = [ ]
         for i in range( self.degree + other.degree + 1 ):
             total.append( 0 )
@@ -353,7 +353,7 @@ class array_poly_mod(array_poly):
         self * other by Fast Fourier Transform.
         """
         if self.mod != other.mod:
-            raise ValueError , "  "
+            raise ValueError("  ")
         bound1 = max( self.coefficients )
         bound2 = max( other.coefficients )
         bound = bound1 * bound2 * ( max( self.degree , other.degree ) + 1 ) 

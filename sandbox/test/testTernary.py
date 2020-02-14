@@ -39,9 +39,9 @@ class TernaryValueTest (unittest.TestCase):
         self.assertEqual(FALSE, FALSE.t_and(UNKNOWN))
 
     def testBool(self):
-        self.assert_(TRUE)
-        self.failIf(FALSE)
-        self.failIf(UNKNOWN) # This is the convention.
+        self.assertTrue(TRUE)
+        self.assertFalse(FALSE)
+        self.assertFalse(UNKNOWN) # This is the convention.
         self.assertEqual(False, bool(UNKNOWN))
 
 

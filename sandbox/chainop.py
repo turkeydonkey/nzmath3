@@ -47,7 +47,7 @@ def multi_chains(funcs, inits, times):
             results = [func(r, m) for (r, m) in zip(results, metas)]
         index //= 2
         if index:
-            metas = map(meta_func, metas)
+            metas = list(map(meta_func, metas))
     return results
 
 

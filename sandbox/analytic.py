@@ -2,7 +2,7 @@
 Analytic number theory
 """
 
-from __future__ import division
+
 import cmath
 import math
 import sys
@@ -66,11 +66,11 @@ def _convertToRational(x):
     A complex object cannot be converted and raise TypeError.
     """
     if isinstance(x, float):
-        retval = +rational.Rational(long(math.frexp(x)[0] * 2 ** 53), 2 ** (53 - math.frexp(x)[1]))
-    elif isinstance(x, (int, long)):
+        retval = +rational.Rational(int(math.frexp(x)[0] * 2 ** 53), 2 ** (53 - math.frexp(x)[1]))
+    elif isinstance(x, int):
         retval = rational.Integer(x)
     elif isinstance(x, complex):
-        raise TypeError, "The real module cannot handle %s. Please use imaginary module." % x
+        raise TypeError("The real module cannot handle %s. Please use imaginary module." % x)
     else:
         # fall back
         retval = rational.Rational(x)

@@ -1,4 +1,4 @@
-from __future__ import division
+
 import unittest
 import nzmath.ring as ring
 import nzmath.rational as rational
@@ -93,16 +93,16 @@ class PrimeCharacteristicFunctionsProviderTest (unittest.TestCase):
     def testSquareFreeDecomposition(self):
         g_decomp = self.g.squarefree_decomposition()
         self.assertEqual(1, len(g_decomp))
-        self.assertEqual(2, g_decomp.keys()[0])
+        self.assertEqual(2, list(g_decomp.keys())[0])
         h_decomp = self.h.squarefree_decomposition()
         self.assertEqual(1, len(h_decomp))
-        self.assertEqual(1, h_decomp.keys()[0])
-        self.assertEqual(self.h, h_decomp.values()[0], str(h_decomp.items()[0]))
+        self.assertEqual(1, list(h_decomp.keys())[0])
+        self.assertEqual(self.h, list(h_decomp.values())[0], str(list(h_decomp.items())[0]))
         self.assertTrue(self.thirty.gcd(self.thirty.differentiate()))
         p_decomp = self.h.squarefree_decomposition()
         self.assertEqual(1, len(p_decomp))
-        self.assertEqual(1, p_decomp.keys()[0])
-        self.assertEqual(self.h, p_decomp.values()[0], str(p_decomp.items()[0]))
+        self.assertEqual(1, list(p_decomp.keys())[0])
+        self.assertEqual(self.h, list(p_decomp.values())[0], str(list(p_decomp.items())[0]))
         self.assertTrue(self.thirty.gcd(self.thirty.differentiate()))
 
     def testDistinctDegreeFactorization(self):
@@ -126,8 +126,8 @@ class PrimeCharacteristicFunctionsProviderTest (unittest.TestCase):
         for factor in factored:
             self.assertTrue(isinstance(factor, tuple))
             self.assertEqual(2, len(factor))
-            self.assertTrue(isinstance(factor[1], (int,long)))
-        product = self.p.__class__([(0, ring.getRing(self.p.itercoefficients().next()).one)], coeffring=self.p.getCoefficientRing())
+            self.assertTrue(isinstance(factor[1], int))
+        product = self.p.__class__([(0, ring.getRing(next(self.p.itercoefficients())).one)], coeffring=self.p.getCoefficientRing())
         for factor, index in factored:
             product = product * factor ** index
         self.assertEqual(self.p, product)
@@ -173,21 +173,21 @@ class SubresultantGcdProviderTest (unittest.TestCase):
         self.assertEqual(-self.v, self.u.subresultant_gcd(self.v))
         #
         Z = rational.theIntegerRing
-        f = uniutil.polynomial([(0, 1L), (2, -1L), (4, 1L)], Z)
-        gx = uniutil.polynomial([(1, -2L), (3, 4L)], Z)
-        g = uniutil.polynomial([(0, -2L), (2, 4L)], Z)
+        f = uniutil.polynomial([(0, 1), (2, -1), (4, 1)], Z)
+        gx = uniutil.polynomial([(1, -2), (3, 4)], Z)
+        g = uniutil.polynomial([(0, -2), (2, 4)], Z)
         self.assertEqual(f.subresultant_gcd(gx), f.subresultant_gcd(g))
 
     def testResultant(self):
         Z = rational.theIntegerRing
         I = rational.Integer
-        f = uniutil.polynomial(enumerate(map(I, range(5))), coeffring=Z)
-        g = uniutil.polynomial(enumerate(map(I, range(7, 10))), coeffring=Z)
+        f = uniutil.polynomial(enumerate(map(I, list(range(5)))), coeffring=Z)
+        g = uniutil.polynomial(enumerate(map(I, list(range(7, 10)))), coeffring=Z)
         self.assertEqual(0, f.resultant(f * g))
         h1 = uniutil.polynomial(enumerate(map(I, [-2, 0, 0, 1])), coeffring=Z)
         h2 = uniutil.polynomial(enumerate([Z.zero, Z.one]), coeffring=Z)
         self.assertEqual(2, h1.resultant(h2))
-        t = uniutil.polynomial(enumerate(map(I, range(7, 0, -1))), coeffring=Z)
+        t = uniutil.polynomial(enumerate(map(I, list(range(7, 0, -1)))), coeffring=Z)
         self.assertEqual(2**16 * 7**4, t.resultant(t.differentiate()))
 
 

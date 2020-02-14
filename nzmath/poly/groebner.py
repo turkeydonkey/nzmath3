@@ -2,7 +2,7 @@
 Groebner basis
 """
 
-from __future__ import division
+
 import nzmath.compatibility
 import nzmath.ring as ring
 

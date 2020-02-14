@@ -2,7 +2,7 @@
 finite fields.
 """
 
-from __future__ import division
+
 import logging
 import nzmath.gcd as gcd
 import nzmath.bigrandom as bigrandom
@@ -502,7 +502,7 @@ class ExtendedFieldElement(FiniteFieldElement):
     def __ne__(self, other):
         return not (self == other)
 
-    def __nonzero__(self):
+    def __bool__(self):
         return bool(self.rep)
 
     def __repr__(self):
@@ -576,7 +576,7 @@ class ExtendedField(FiniteField):
           2) a polynomial in a polynomial ring of F_p with degree
              greater than 1.
         """
-        if isinstance(n_or_modulus, (int, long)):
+        if isinstance(n_or_modulus, int):
             n = n_or_modulus
             if n <= 1:
                 raise ValueError("degree of extension must be > 1.")
@@ -677,7 +677,7 @@ class ExtendedField(FiniteField):
         """
         Create an element of the field.
         """
-        if isinstance(seed, (int, long)):
+        if isinstance(seed, int):
             expansion = arith1.expand(seed, card(self.basefield))
             return ExtendedFieldElement(
                 uniutil.FiniteFieldPolynomial(enumerate(expansion), self.basefield),

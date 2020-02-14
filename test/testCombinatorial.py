@@ -306,7 +306,7 @@ class PermutationTest(unittest.TestCase):
     def testIsPermutation(self):
         setof100 = set(range(100))
         # test only first 10, since 100! is to big to test all.
-        for i, perm in zip(range(10), permutationGenerator(100)):
+        for i, perm in zip(list(range(10)), permutationGenerator(100)):
             self.assertEqual(100, len(perm))
             self.assertEqual(setof100, set(perm))
 

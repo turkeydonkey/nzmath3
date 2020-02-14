@@ -51,7 +51,7 @@ class FactoredInteger(object):
         and the product of prime**exponent is equal to the integer.
         Otherwise, factorization is carried out in initialization.
         """
-        self.integer = long(integer)
+        self.integer = int(integer)
         if factors is None:
             self.factors = dict(methods.factor(self.integer))
         else:
@@ -65,7 +65,7 @@ class FactoredInteger(object):
         {prime:exponent}.
         """
         partial_factor = 1
-        for p, e in partial.iteritems():
+        for p, e in partial.items():
             partial_factor *= p**e
         assert not integer % partial_factor, "wrong factorization"
         return cls(integer // partial_factor) * cls(partial_factor, partial)
@@ -74,7 +74,7 @@ class FactoredInteger(object):
         """
         Default iterator
         """
-        return self.factors.iteritems()
+        return iter(self.factors.items())
 
     def __mul__(self, other):
         if isinstance(other, FactoredInteger):
@@ -146,7 +146,7 @@ class FactoredInteger(object):
                 quotient.factors[divisor] -= 1
         elif not isinstance(other, FactoredInteger):
             dividing = divisor
-            for p, e in self.factors.iteritems():
+            for p, e in self.factors.items():
                 while not dividing % p:
                     dividing //= p
                     if quotient.factors[p] == 1:
@@ -158,7 +158,7 @@ class FactoredInteger(object):
                     break
             assert dividing == 1
         else:
-            for p, e in other.factors.iteritems():
+            for p, e in other.factors.items():
                 assert p in quotient.factors and quotient.factors[p] >= e
                 if quotient.factors[p] == e:
                     del quotient.factors[p]
@@ -175,7 +175,7 @@ class FactoredInteger(object):
         Return all divisors.
         """
         l = [1]
-        for p, e in self.factors.iteritems():
+        for p, e in self.factors.items():
             for j in range(1, e + 1):
                 l += [k*pow(p, j) for k in l if k % p]
         l.sort()
@@ -191,7 +191,7 @@ class FactoredInteger(object):
         """
         Return the list of primes that divides the number.
         """
-        return self.factors.keys()
+        return list(self.factors.keys())
 
     def square_part(self, asfactored=False):
         """
@@ -201,7 +201,7 @@ class FactoredInteger(object):
         also a FactoredInteger object. (default is False)
         """
         result = FactoredInteger(1, {})
-        for d, e in self.factors.iteritems():
+        for d, e in self.factors.items():
             if e >= 2:
                 result *= FactoredInteger(d ** (e >> 1), {d:e>>1})
         if asfactored:
@@ -217,7 +217,7 @@ class FactoredInteger(object):
         also a FactoredInteger object. (default is False)
         """
         result = FactoredInteger(1, {})
-        for d, e in self.factors.iteritems():
+        for d, e in self.factors.items():
             if e & 1:
                 result *= FactoredInteger(d, {d:1})
         if asfactored:

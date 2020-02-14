@@ -1,4 +1,4 @@
-from __future__ import division
+
 import nzmath.arith1 as arith1
 import nzmath.prime as prime
 import nzmath.rational as rational

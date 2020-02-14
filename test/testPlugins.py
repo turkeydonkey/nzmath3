@@ -1,4 +1,4 @@
-from __future__ import division
+
 import unittest
 from nzmath.plugins import MATHMODULE as math, CMATHMODULE as cmath, \
      FLOATTYPE as Float, COMPLEXTYPE as Complex, \

@@ -9,7 +9,7 @@ lift, you would directly use one of the lifters and its lift method
 for consecutive lifts.
 """
 
-from __future__ import division
+
 import sys
 import nzmath.arith1 as arith1
 import nzmath.rational as rational
@@ -335,7 +335,7 @@ class HenselLiftSimultaneously(object):
             self.dis.append(rest.scalar_exact_division(q))
 
     @classmethod
-    def from_factors(cls, target, factors, p, ubound=sys.maxint):
+    def from_factors(cls, target, factors, p, ubound=sys.maxsize):
         """
         Create and return an instance of HenselLiftSimultaneously,
         whose factors are lifted by HenselLiftMulti upto ubound (if it
@@ -348,7 +348,7 @@ class HenselLiftSimultaneously(object):
         with a prime number p and ai's in factors.
         """
         lifter = HenselLiftMulti.from_factors(target, factors, p)
-        interbound = min(ubound, sys.maxint)
+        interbound = min(ubound, sys.maxsize)
         while lifter.p < interbound:
             lifter.lift_factors()
             lifter.lift_ladder()
@@ -378,7 +378,7 @@ class HenselLiftSimultaneously(object):
             mini_target = self.dis[0]
         aj, bj = [], []
         self.uis, self.yis, self.zis = [], {}, {}
-        for i in xrange(self.r - 1):
+        for i in range(self.r - 1):
             dividend = mini_target - self.gis[i] * self.his[i]
             self.uis.append(dividend.scalar_exact_division(self.p))
             self.yis[i], self.zis[i] = self._solve_yz(i)
@@ -414,7 +414,7 @@ class HenselLiftSimultaneously(object):
         self.ais[-2], self.ais[-1] = self.ais[-1], self.ais[0]
         self.bis[-2], self.bis[-1] = self.bis[-1], self.bis[0]
         aj, bj = [], []
-        for i in xrange(self.r - 1):
+        for i in range(self.r - 1):
             yi, zi = self.yis[i], self.zis[i]
             dividend = self.ais[-2][i]*yi + self.bis[-2][i]*zi - self.uis[i]
             v_j = dividend.scalar_exact_division(self.p)
@@ -503,7 +503,7 @@ def lift_upto(target, factors, p, bound):
     """
     if len(factors) == 2:
         lifter = HenselLiftPair.from_factors(target, factors[0], factors[1], p)
-    elif bound < sys.maxint:
+    elif bound < sys.maxsize:
         lifter = HenselLiftMulti.from_factors(target, factors, p)
     else:
         lifter = HenselLiftSimultaneously.from_factors(target, factors, p)

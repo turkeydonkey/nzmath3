@@ -1,6 +1,6 @@
 """ support modules of elliptic curves. (private) 
 """
-from __future__ import division
+
 
 import nzmath.poly.uniutil as univar
 import nzmath.poly.multiutil as multivar

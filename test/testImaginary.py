@@ -1,4 +1,4 @@
-from __future__ import division
+
 import unittest
 import nzmath.imaginary as imaginary
 import nzmath.real as real

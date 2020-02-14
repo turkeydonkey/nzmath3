@@ -20,6 +20,6 @@ def test2(X):
         i= i+1
     return N
 
-print test2(XX) == test(XX)
+print(test2(XX) == test(XX))
 profile.run("test(XX)")
 profile.run("test2(XX)")

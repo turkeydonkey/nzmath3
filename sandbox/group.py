@@ -2,7 +2,7 @@
 Abstract Group structure provided module.
 Support Group-like Properties.
 """
-from __future__ import division
+
 
 import logging
 
@@ -251,7 +251,7 @@ class AdditiveGroupElement(GroupElement, algebraicessence.AdditiveElement):
 
     __rmul__ = __mul__
 
-    def __nonzero__(self):
+    def __bool__(self):
         if self == self.getAdditiveSet().zero:
             return True
         return False

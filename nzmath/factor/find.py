@@ -114,9 +114,9 @@ def trialDivision(n, **options):
 
     if 'start' in options and 'stop' in options:
         if 'step' in options:
-            trials = range(options['start'], options['stop'], options['step'])
+            trials = list(range(options['start'], options['stop'], options['step']))
         else:
-            trials = range(options['start'], options['stop'])
+            trials = list(range(options['start'], options['stop']))
     elif 'iterator' in options:
         trials = options['iterator']
     elif n < 1000000:

@@ -1,4 +1,4 @@
-from __future__ import division
+
 import unittest
 import sandbox.cartesian as cartesian
 

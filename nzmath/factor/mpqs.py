@@ -23,7 +23,7 @@ class QS(object):
         self.Srange = sieverange
         self.FBN = factorbase
 
-        self.move_range = range(self.sqrt_n-self.Srange, self.sqrt_n+self.Srange+1)
+        self.move_range = list(range(self.sqrt_n-self.Srange, self.sqrt_n+self.Srange+1))
         self.FB = [-1]
         self.FB_log = [0]
         self.set_factor_base(factorbase)
@@ -338,7 +338,7 @@ class MPQS(object):
         rough_upper = 0
         minus_check = set()  # set of x where F(x) is negative.
         q_j = self.last_poly(-self.sieve_range - 1)
-        for j in xrange(-self.sieve_range, self.sieve_range + 1):
+        for j in range(-self.sieve_range, self.sieve_range + 1):
             q_j += self.last_poly.delta(j)
             f_j = q_j
             if f_j < 0:
@@ -391,7 +391,7 @@ class MPQS(object):
             ppow *= 2
             new_solutions = []
             for pos in solutions:
-                for j in xrange(pos, fullrange, ppow):
+                for j in range(pos, fullrange, ppow):
                     logp[j] += log_2
                 if poly_table[pos] % (ppow * 2) == 0:
                     new_solutions.append(pos)
@@ -410,7 +410,7 @@ class MPQS(object):
         for starts in start_p:
             ppow *= p
             for divisible in starts:
-                for index in xrange(divisible, fullrange, ppow):
+                for index in range(divisible, fullrange, ppow):
                     logp[index] += log_p
 
     def _collect_smooth_vectors(self, logp, log_poly, poly_table, minus_check):

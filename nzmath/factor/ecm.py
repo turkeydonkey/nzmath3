@@ -4,7 +4,7 @@ Elliptic Curve Method Factorization
 It's using Montgomery's parametrization.
 """
 
-from __future__ import division
+
 import logging
 import random
 import nzmath.arith1 as _arith1

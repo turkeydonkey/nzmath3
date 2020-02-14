@@ -23,7 +23,7 @@ class HogeTest (unittest.TestCase):
 	Every test method have name prefixed with 'test'.
 	"""
 	# asserting something
-        self.assert_(hoge.ishoge(), "optional message string")
+        self.assertTrue(hoge.ishoge(), "optional message string")
 	# asserting equality
         self.assertEqual(1, hoge.huga)
 

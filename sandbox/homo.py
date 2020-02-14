@@ -2,7 +2,7 @@
 base classes for rings.
 """
 
-from __future__ import division
+
 from nzmath.ring import *
 
 

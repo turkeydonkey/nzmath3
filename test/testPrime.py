@@ -1,4 +1,4 @@
-from __future__ import generators
+
 import unittest
 import logging
 import nzmath.prime as prime
@@ -55,13 +55,13 @@ class PrimeTest(unittest.TestCase):
 
     def testGenerator(self):
         g = prime.generator()
-        self.assertEqual(2, g.next())
-        self.assertEqual(3, g.next())
+        self.assertEqual(2, next(g))
+        self.assertEqual(3, next(g))
 ##         g2 = prime.generator(lambda x: x % 5 == 4) # old fashioned
         import itertools
-        g2 = itertools.ifilter(lambda x: x % 5 == 4, prime.generator())
-        self.assertEqual(19, g2.next())
-        self.assertEqual(29, g2.next())
+        g2 = filter(lambda x: x % 5 == 4, prime.generator())
+        self.assertEqual(19, next(g2))
+        self.assertEqual(29, next(g2))
 
     def testTrialDivision(self):
         self.assertTrue(prime.trialDivision(3))
@@ -81,9 +81,9 @@ class PrimeTest(unittest.TestCase):
 
     def testGeneratorEratosthenes(self):
         g = prime.generator_eratosthenes(3)
-        self.assertEqual(2, g.next())
-        self.assertEqual(3, g.next())
-        self.assertRaises(StopIteration, g.next)
+        self.assertEqual(2, next(g))
+        self.assertEqual(3, next(g))
+        self.assertRaises(StopIteration, g.__next__)
         g = prime.generator_eratosthenes(541)
         self.assertEqual(100, len([p for p in g]))
 

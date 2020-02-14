@@ -1,4 +1,4 @@
-from __future__ import division
+
 
 import math
 import nzmath.arith1 as arith1
@@ -393,7 +393,7 @@ class BasicAlgNumber(object):
                 coeff.append(
                     other.denom*self.coeff[i] + self.denom*other.coeff[i])
             return BasicAlgNumber([coeff, d], self.polynomial)
-        elif isinstance(other, (int, long)):
+        elif isinstance(other, int):
             return self + self._int_to_algnumber(other)
         elif isinstance(other, rational.Rational):
             return self + self._rational_to_algnumber(other)
@@ -414,7 +414,7 @@ class BasicAlgNumber(object):
             j = (g * h).pseudo_mod(f)
             jcoeff = [j[i] for i in range(self.degree)]
             return BasicAlgNumber([jcoeff, d], self.polynomial)
-        elif isinstance(other, (int, long)):
+        elif isinstance(other, int):
             Coeff = [i*other for i in self.coeff]
             return BasicAlgNumber([Coeff, self.denom], self.polynomial)
         elif isinstance(other, rational.Rational):
@@ -649,7 +649,7 @@ class MatAlgNumber(object):
         return MatAlgNumber(coeff, self.polynomial)
 
     def __add__(self, other):
-        if isinstance(other, (int, long, rational.Rational)):
+        if isinstance(other, (int, rational.Rational)):
             other = MatAlgNumber(
                 [other] + [0] * (self.degree -1), self.polynomial)
         elif not isinstance(other, MatAlgNumber):
@@ -663,7 +663,7 @@ class MatAlgNumber(object):
     __radd__ = __add__
 
     def __sub__(self, other):
-        if isinstance(other, (int, long, rational.Rational)):
+        if isinstance(other, (int, rational.Rational)):
             other = MatAlgNumber(
                 [other] + [0] * (self.degree -1), self.polynomial)
         elif not isinstance(other, MatAlgNumber):
@@ -677,7 +677,7 @@ class MatAlgNumber(object):
     def __mul__(self, other):
         if isinstance(other, MatAlgNumber):
             mat = self.matrix * other.matrix
-        elif isinstance(other, (int, long, rational.Rational)):
+        elif isinstance(other, (int, rational.Rational)):
             mat = other * self.matrix
         else:
             return NotImplemented
@@ -689,7 +689,7 @@ class MatAlgNumber(object):
     __rmul__ = __mul__
 
     def __truediv__(self, other):
-        if isinstance(other, (int, long, rational.Rational)):
+        if isinstance(other, (int, rational.Rational)):
             return self * (rational.Rational(other) ** -1)
         elif not isinstance(other, MatAlgNumber):
             return NotImplemented
@@ -790,7 +790,7 @@ def changetype(a, polynomial=[0, 1]):
     """
     Change 'a' to be an element of field K defined polynomial
     """
-    if isinstance(a, (int, long)):
+    if isinstance(a, int):
         coeff = [a] + [0] * (len(polynomial) - 2)
         return BasicAlgNumber([coeff, 1], polynomial)
     elif isinstance(a, rational.Rational):

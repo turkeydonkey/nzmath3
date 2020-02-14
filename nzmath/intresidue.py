@@ -1,4 +1,4 @@
-from __future__ import division
+
 import logging
 import nzmath.gcd as gcd
 import nzmath.rational as rational
@@ -21,7 +21,7 @@ class IntegerResidueClass(ring.CommutativeRingElement):
             modulus = -modulus
         self.m = modulus
 
-        if isinstance(representative, (int, long)):
+        if isinstance(representative, int):
             self.n = representative % self.m
         elif all(hasattr(representative, attr) for attr in ("m", "n")):
             assert representative.m == modulus
@@ -47,15 +47,15 @@ class IntegerResidueClass(ring.CommutativeRingElement):
                 raise ValueError("incompatible modulus: %d and %d" % (self.m, other.m))
         try:
             return self.mul_module_action(other)
-        except TypeError, e:
+        except TypeError as e:
             #trial may fail with TypeError.
             #_log.debug("no action for %s * %s" % (str(self), str(other)))
             pass
-        except AttributeError, e:
+        except AttributeError as e:
             #trial may fail with AttributeError because other may lack ring.
             #_log.debug("no action for %s * %s" % (str(self), str(other)))
             pass
-        except RuntimeError, e:
+        except RuntimeError as e:
             # maximum recursion depth may exceed
             #_log.debug("recursion limit for %s * %s" % (str(self), str(other)))
             pass
@@ -64,15 +64,15 @@ class IntegerResidueClass(ring.CommutativeRingElement):
     def __rmul__(self, other):
         try:
             return self.mul_module_action(other)
-        except TypeError, e:
+        except TypeError as e:
             #trial may fail with TypeError.
             #_log.debug("no action for %s * %s" % (str(other), str(self)))
             pass
-        except AttributeError, e:
+        except AttributeError as e:
             #trial may fail with AttributeError because other may lack ring.
             #_log.debug("no action for %s * %s" % (str(other), str(self)))
             pass
-        except RuntimeError, e:
+        except RuntimeError as e:
             # maximum recursion depth may exceed
             #_log.debug("recursion limit for %s * %s" % (str(other), str(self)))
             pass
@@ -158,7 +158,7 @@ class IntegerResidueClass(ring.CommutativeRingElement):
     def __pos__(self):
         return self.__class__(+self.n, self.m)
 
-    def __nonzero__(self):
+    def __bool__(self):
         return bool(self.n)
 
     def __eq__(self, other):

@@ -13,9 +13,9 @@ def randrange(start, stop=None, step=1):
     see random.randrange
     """
     if stop is None:
-        if abs(start) < sys.maxint:
+        if abs(start) < sys.maxsize:
             return _random.randrange(start)
-    elif abs(stop - start) < sys.maxint:
+    elif abs(stop - start) < sys.maxsize:
         return _random.randrange(start, stop, step)
 
     negative_step = False
@@ -52,11 +52,11 @@ def _validate_for_randrange(start, stop, step):
     """
     if step == 0:
         raise ValueError("zero step for randrange()")
-    elif start != long(start):
+    elif start != int(start):
         raise ValueError("non-integer arg 1 for randrange()")
-    elif stop != long(stop):
+    elif stop != int(stop):
         raise ValueError("non-integer stop for randrange()")
-    elif step != long(step):
+    elif step != int(step):
         raise ValueError("non-integer step for randrange()")
     if start >= stop:
         raise ValueError("empty range for randrange()")

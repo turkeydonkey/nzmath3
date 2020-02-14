@@ -2,7 +2,7 @@
 Multivariate polynomial extenders.
 """
 
-from __future__ import division
+
 import nzmath.rational as rational
 import nzmath.ring as ring
 import nzmath.poly.termorder as termorder
@@ -83,7 +83,7 @@ class NestProvider (object):
         q_coeff = {}
         for d, cpoly in q:
             for inner_d, inner_c in cpoly:
-                if isinstance(inner_d, (int, long)):
+                if isinstance(inner_d, int):
                     inner_d = [inner_d]
                 else:
                     inner_d = list(inner_d)
@@ -290,7 +290,7 @@ class RingPolynomial (OrderProvider,
         """
         if "number_of_variables" not in kwds:
             coefficients = dict(coefficients)
-            for i in coefficients.iterkeys():
+            for i in coefficients.keys():
                 kwds["number_of_variables"] = len(i)
                 break
         multivar.BasicPolynomial.__init__(self, coefficients, **kwds)
@@ -620,7 +620,7 @@ class PolynomialIdeal (ring.Ideal):
             return elem == self.ring.zero
         return not self.reduce(elem)
 
-    def __nonzero__(self):
+    def __bool__(self):
         """
         Report whether the ideal is zero ideal or not.  Of course,
         False is for zero ideal.

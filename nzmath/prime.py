@@ -646,7 +646,7 @@ class Zeta(object):
         """
         Return the number of nonzero entries.
         """
-        return len(filter(None, self.z))
+        return len([_f for _f in self.z if _f])
 
     def mass(self):
         """
@@ -681,7 +681,7 @@ class FactoredInteger(object):
         {prime:exponent}.
         """
         partial_factor = 1
-        for p, e in partial.iteritems():
+        for p, e in partial.items():
             partial_factor *= p**e
         assert not integer % partial_factor, "wrong factorization"
         return cls(integer // partial_factor) * cls(partial_factor, partial)
@@ -690,7 +690,7 @@ class FactoredInteger(object):
         """
         Default iterator
         """
-        return self.factors.iteritems()
+        return iter(self.factors.items())
 
     def __mul__(self, other):
         if isinstance(other, FactoredInteger):
@@ -798,7 +798,7 @@ class FactoredInteger(object):
                 quotient.factors[divisor] -= 1
         elif not isinstance(other, FactoredInteger):
             dividing = divisor
-            for p, e in self.factors.iteritems():
+            for p, e in self.factors.items():
                 while not dividing % p:
                     dividing //= p
                     if quotient.factors[p] == 1:
@@ -810,7 +810,7 @@ class FactoredInteger(object):
                     break
             assert dividing == 1
         else:
-            for p, e in other.factors.iteritems():
+            for p, e in other.factors.items():
                 assert p in quotient.factors and quotient.factors[p] >= e
                 if quotient.factors[p] == e:
                     del quotient.factors[p]
@@ -827,7 +827,7 @@ class FactoredInteger(object):
         Return all divisors.
         """
         divs = [FactoredInteger(1)]
-        for p, e in self.factors.iteritems():
+        for p, e in self.factors.items():
             q = FactoredInteger(1)
             pcoprimes = list(divs)
             for j in range(1, e + 1):
@@ -845,7 +845,7 @@ class FactoredInteger(object):
         """
         Return the list of primes that divides the number.
         """
-        return self.factors.keys()
+        return list(self.factors.keys())
 
 
 class TestPrime(object):
@@ -853,7 +853,7 @@ class TestPrime(object):
     primecache = set(primes)
 
     def __init__(self, t=12):
-        if isinstance(t, (int, long)):
+        if isinstance(t, int):
             self.t = FactoredInteger(t)
         else:
             assert isinstance(t, FactoredInteger)
@@ -870,7 +870,7 @@ class TestPrime(object):
                     self.et = self.et * FactoredInteger(p**e, {p:e})
                 self.primecache.add(p)
 
-    def next(self):
+    def __next__(self):
         eu = []
         for p in self.primes:
             if p in self.t.factors:
@@ -1163,9 +1163,9 @@ def apr(n):
     rb = arith1.floorsqrt(n) + 1
     el = TestPrime()
     while el.et <= rb:
-        el = el.next()
+        el = next(el)
 
-    plist = el.t.factors.keys()
+    plist = list(el.t.factors.keys())
     plist.remove(2)
     L.yet(2)
     for p in plist:
@@ -1173,7 +1173,7 @@ def apr(n):
             L.done(p)
         else:
             L.yet(p)
-    qlist = el.et.factors.keys()
+    qlist = list(el.et.factors.keys())
     qlist.remove(2)
     J = JacobiSum()
     for q in qlist:

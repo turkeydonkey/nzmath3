@@ -1,4 +1,4 @@
-from __future__ import division
+
 from math import floor
 from nzmath.matrix import Matrix
 from nzmath.matrix import VectorsNotIndependent

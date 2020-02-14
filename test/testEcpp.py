@@ -1,4 +1,4 @@
-from __future__ import division
+
 import unittest
 import logging
 from nzmath.config import HAVE_MPMATH

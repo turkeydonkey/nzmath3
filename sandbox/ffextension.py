@@ -1,7 +1,7 @@
 """
 ffextension.py - Extention of FiniteExtendedField .
 """
-from __future__ import division
+
 import logging
 import operator
 
@@ -68,7 +68,7 @@ class FiniteFieldExtension (FiniteField):
         Create an element of the field.
         """
         # FIXME: Undefined variable 'FinitFieldExtensionElement'
-        if isinstance(seed, (int, long)):
+        if isinstance(seed, int):
             expansion = arith1.expand(seed, card(self.basefield))
             return FinitFieldExtensionElement(
                 polynomial.OneVariableDensePolynomial(
@@ -234,7 +234,7 @@ class FiniteFieldExtensionElement (FiniteFieldElement):
     def __add__(self, other):
         # FIXME: Undefined variable 'FinitePrimeField'
         # FIXME: Instance of 'FiniteFieldExtensionElement' has no 'basefield' member
-        if isinstance(other, (int, long)) and (not other):
+        if isinstance(other, int) and (not other):
             return self.__class__(self.rep, self.field)
         if other.getRing() == FinitePrimeField.getInstance(self.field.getCharacteristic()):
             seed = self.field.createElement(other.n)
@@ -277,7 +277,7 @@ class FiniteFieldExtensionElement (FiniteFieldElement):
     def __sub__(self, other):
         # FIXME: Undefined variable 'FinitePrimeField'
         # FIXME: Instance of 'FiniteFieldExtensionElement' has no 'basefield' member
-        if isinstance(other, (int, long)) and (not other):
+        if isinstance(other, int) and (not other):
             return self.__class__(self.rep, self.field)
         if other.getRing() == FinitePrimeField.getInstance(self.field.getCharacteristic()):
             seed = self.field.createElement(other.n)
@@ -299,7 +299,7 @@ class FiniteFieldExtensionElement (FiniteFieldElement):
     def __mul__(self, other):
         # FIXME: Undefined variable 'FinitePrimeField'
         # FIXME: Instance of 'FiniteFieldExtensionElement' has no 'basefield' member
-        if isinstance(other, (int, long)):
+        if isinstance(other, int):
             seed = self.field.createElement(other % self.field.getCharacteristic())
             prod = self.field.modulus.reduce(self.rep * seed.rep)
         elif other.getRing() == FinitePrimeField.getInstance(self.field.getCharacteristic()):
@@ -326,5 +326,5 @@ class FiniteFieldExtensionElement (FiniteFieldElement):
                 return True
         return False
 
-    def __nonzero__(self):
+    def __bool__(self):
         return self.rep.__nonzero__()

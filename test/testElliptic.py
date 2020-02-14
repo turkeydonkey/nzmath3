@@ -15,14 +15,14 @@ class EllipticTest(unittest.TestCase):
         self.b = elliptic.EC([1,0], 0)
         self.c = elliptic.EC([0,17], 0)
 
-        self.P1 = map(rational.Rational,[-2,3])
-        self.P2 = map(rational.Rational,[-1,4])
-        self.P3 = map(rational.Rational,[2,5])
-        self.P4 = map(rational.Rational,[4,9])
-        self.P5 = map(rational.Rational,[8,23])
-        self.P6 = map(rational.Rational,[43,282])
-        self.P7 = map(rational.Rational,[52,375])
-        self.P8 = map(rational.Rational,[5234,378661])
+        self.P1 = list(map(rational.Rational,[-2,3]))
+        self.P2 = list(map(rational.Rational,[-1,4]))
+        self.P3 = list(map(rational.Rational,[2,5]))
+        self.P4 = list(map(rational.Rational,[4,9]))
+        self.P5 = list(map(rational.Rational,[8,23]))
+        self.P6 = list(map(rational.Rational,[43,282]))
+        self.P7 = list(map(rational.Rational,[52,375]))
+        self.P8 = list(map(rational.Rational,[5234,378661]))
 
     def testInit(self):
         self.assertEqual(16, self.a.c4)
@@ -245,9 +245,9 @@ class PairingTest(unittest.TestCase):
         # e2 is isomorphic to Z/256 x Z/256
         F_65537 = finitefield.FinitePrimeField(65537)
         e2 = elliptic.EC([-1, 0], F_65537)
-        P1 = map(F_65537.createElement, [30840, 53250])
+        P1 = list(map(F_65537.createElement, [30840, 53250]))
         self.assertFalse(256 % e2.pointorder(P1))
-        P2 = map(F_65537.createElement, [10657, 46245])
+        P2 = list(map(F_65537.createElement, [10657, 46245]))
         self.assertFalse(256 % e2.pointorder(P2))
         weil10 = set(e2.WeilPairing(256, P1, P2) for i in range(10))
         # since Weil pairing is a function, the result is always same
@@ -261,9 +261,9 @@ class PairingTest(unittest.TestCase):
         # up to a multiple by an lth power.
         e = elliptic.EC([-1, 1], 11)
         self.assertEqual(10, e.order())
-        P = map(e.basefield.createElement,[3, 6])
+        P = list(map(e.basefield.createElement,[3, 6]))
         R = e.TatePairing(5, P, P)
-        l = map(finitefield.FinitePrimeFieldElement, [5, 6], [11]*2)
+        l = list(map(finitefield.FinitePrimeFieldElement, [5, 6], [11]*2))
         self.assertTrue(R in l, R)
 
     def testTatePairing_Extend(self):
@@ -290,9 +290,9 @@ class PairingTest(unittest.TestCase):
     def testBSGS(self):
         F_65537 = finitefield.FinitePrimeField(65537)
         e2 = elliptic.EC([-1, 0], F_65537)
-        P1 = map(F_65537.createElement, [30840, 53250])
+        P1 = list(map(F_65537.createElement, [30840, 53250]))
         self.assertFalse(256 % e2.BSGS(P1))
-        P2 = map(F_65537.createElement, [10657, 46245])
+        P2 = list(map(F_65537.createElement, [10657, 46245]))
         self.assertFalse(256 % e2.BSGS(P2))
         
 

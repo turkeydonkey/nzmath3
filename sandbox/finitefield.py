@@ -2,7 +2,7 @@
 finite fields.
 """
 
-from __future__ import division
+
 import logging
 import nzmath.gcd as gcd
 import nzmath.bigrandom as bigrandom
@@ -460,7 +460,7 @@ class FiniteExtendedFieldElement (FiniteFieldElement):
     def __ne__(self, other):
         return not (self == other)
 
-    def __nonzero__(self):
+    def __bool__(self):
         return self.rep.__nonzero__()
 
     def __repr__(self):
@@ -482,7 +482,7 @@ class FiniteExtendedField (FiniteField):
         """
         FiniteField.__init__(self, characteristic)
         self.basefield = FinitePrimeField.getInstance(self.char)
-        if isinstance(n_or_modulus, (int, long)):
+        if isinstance(n_or_modulus, int):
             if n_or_modulus <= 1:
                 raise ValueError("degree of extension must be > 1.")
             self.degree = n_or_modulus
@@ -533,7 +533,7 @@ class FiniteExtendedField (FiniteField):
         """
         Create an element of the field.
         """
-        if isinstance(seed, (int, long)):
+        if isinstance(seed, int):
             expansion = arith1.expand(seed, self.char)
             return FiniteExtendedFieldElement(
                 FinitePrimeFieldPolynomial(enumerate(expansion), self.basefield),
@@ -663,7 +663,7 @@ class FiniteExtendedField (FiniteField):
             return 1
         elif x == -self.one:
             return -1
-        print x
+        print(x)
         raise ValueError("element must be not in field")
 
     def TonelliShanks(self, element):

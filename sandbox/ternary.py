@@ -48,7 +48,7 @@ class TernaryValue (object):
         self.value = representative
         self._block.append(self.value)
 
-    def __nonzero__(self):
+    def __bool__(self):
         """
         map TRUE to True, FALSE and UNKNOWN to False.
         """

@@ -1,4 +1,4 @@
-from __future__ import division
+
 import unittest
 from nzmath.matrix import *
 import nzmath.vector as vector
@@ -16,7 +16,7 @@ except:
     try:
         from nzmath.test.testMatrixFiniteField import *
     except:
-        from testMatrixFiniteField import *
+        from .testMatrixFiniteField import *
 
 ## for RingMatrix
 a1 = createMatrix(1, 2, [3, 2])
@@ -256,7 +256,7 @@ class RingSquareMatrixTest(unittest.TestCase):
     def testDeterminant(self):
         self.assertEqual(-2, b1.determinant())
         #sf.bug #1914349
-        self.assertTrue(isinstance(b3.determinant(), (int, long)))
+        self.assertTrue(isinstance(b3.determinant(), int))
         self.assertEqual(36, b3.determinant())
 
     def testCofactor(self):

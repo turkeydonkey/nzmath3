@@ -1,7 +1,7 @@
 """
 Abstract Cyclic Group structure provided module.
 """
-from __future__ import division
+
 import logging
 
 import nzmath.integerResidueClass as integerResidueClass

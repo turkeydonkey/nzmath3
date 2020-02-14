@@ -1,4 +1,4 @@
-from __future__ import division
+
 import unittest
 import nzmath.rational as rational
 import nzmath.poly.uniutil as uniutil
@@ -20,8 +20,8 @@ class Round2Test (unittest.TestCase):
         self.root1i = [1, 0, 1]
         self.cubic = [1, 9, 0, 1]
         self.quartic = [1, 0, -10, 0, 1]
-        self.sextic = range(7, 0, -1)
-        self.septic = range(8, 0, -1)
+        self.sextic = list(range(7, 0, -1))
+        self.septic = list(range(8, 0, -1))
         self.Z = rational.theIntegerRing
         self.Q = rational.theRationalField
 

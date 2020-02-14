@@ -1,4 +1,4 @@
-from __future__ import division
+
 import unittest
 from nzmath.rational import *
 import nzmath.finitefield as finitefield
@@ -8,7 +8,7 @@ from nzmath.plugins import FLOATTYPE as Float
 class RationalTest (unittest.TestCase):
     def testInit(self):
         self.assertEqual("2/1", str(Rational(2)))
-        self.assertEqual("2/1", str(Rational(2L)))
+        self.assertEqual("2/1", str(Rational(2)))
         self.assertEqual("1/2", str(Rational(1,2)))
         self.assertEqual("1/2", str(Rational(Rational(1,2))))
         self.assertEqual("21/26", str(Rational(Rational(7,13),Rational(2,3))))
@@ -102,7 +102,7 @@ class RationalTest (unittest.TestCase):
         self.assertFalse(Rational(3,4) < Rational(5,7))
         self.assertFalse(Rational(3,4) < Rational(3,4))
         self.assertTrue(Rational(132,133) < 1)
-        self.assertTrue(Rational(-13,12) < -1L)
+        self.assertTrue(Rational(-13,12) < -1)
         self.assertTrue(1 > Rational(132,133))
         self.assertTrue(Rational(132,133) < 1.000001)
 
@@ -111,14 +111,14 @@ class RationalTest (unittest.TestCase):
         self.assertFalse(Rational(3,4) <= Rational(5,7))
         self.assertTrue(Rational(3,4) <= Rational(3,4))
         self.assertTrue(Rational(132,133) <= 1)
-        self.assertTrue(Rational(-13,12) <= -1L)
+        self.assertTrue(Rational(-13,12) <= -1)
         self.assertTrue(1 >= Rational(132,133))
 
     def testEq(self):
         self.assertTrue(Rational(1,2) == Rational(1,2))
         self.assertTrue(Rational(-1,2) == Rational(-1,2))
         self.assertTrue(Rational(4,2) == 2)
-        self.assertTrue(2L == Rational(14,7))
+        self.assertTrue(2 == Rational(14,7))
         self.assertFalse(Rational(3,5) == Rational(27,46))
 
     def testNe(self):
@@ -131,7 +131,7 @@ class RationalTest (unittest.TestCase):
         self.assertFalse(Rational(5,7) > Rational(3,4))
         self.assertFalse(Rational(3,4) > Rational(3,4))
         self.assertTrue(Rational(13,12) > 1)
-        self.assertTrue(Rational(-11,12) > -1L)
+        self.assertTrue(Rational(-11,12) > -1)
         self.assertTrue(1 < Rational(134,133))
 
     def testGe(self):
@@ -139,13 +139,13 @@ class RationalTest (unittest.TestCase):
         self.assertFalse(Rational(5,7) >= Rational(3,4))
         self.assertTrue(Rational(3,4) >= Rational(3,4))
         self.assertTrue(Rational(13,12) >= 1)
-        self.assertTrue(Rational(-11,12) >= -1L)
+        self.assertTrue(Rational(-11,12) >= -1)
         self.assertTrue(1 <= Rational(134,133))
 
     def testLong(self):
-        self.assertTrue(1 == long(Rational(13,12)))
-        self.assertTrue(0 == long(Rational(12,13)))
-        self.assertTrue(-1 == long(Rational(-1,14)))
+        self.assertTrue(1 == int(Rational(13,12)))
+        self.assertTrue(0 == int(Rational(12,13)))
+        self.assertTrue(-1 == int(Rational(-1,14)))
 
     def testInt(self):
         self.assertTrue(1 == int(Rational(13,12)))
@@ -230,7 +230,7 @@ class IntegerTest(unittest.TestCase):
 class IntegerRingTest(unittest.TestCase):
     def testContains(self):
         self.assertTrue(1 in theIntegerRing)
-        self.assertTrue(1L in theIntegerRing)
+        self.assertTrue(1 in theIntegerRing)
         self.assertTrue(Integer(1) in theIntegerRing)
         self.assertTrue(Rational(1,2) not in theIntegerRing)
         self.assertTrue((1,) not in theIntegerRing)
@@ -292,7 +292,7 @@ class IntegerRingTest(unittest.TestCase):
 class RationalFieldTest(unittest.TestCase):
     def testContains(self):
         self.assertTrue(1 in theRationalField)
-        self.assertTrue(1L in theRationalField)
+        self.assertTrue(1 in theRationalField)
         self.assertTrue(Integer(1) in theRationalField)
         self.assertTrue(Rational(1,2) in theRationalField)
         self.assertTrue(3.14 not in theRationalField)
@@ -337,7 +337,7 @@ class IntegerIfIntOrLongTest (unittest.TestCase):
         self.assertTrue(isinstance(b, Integer))
 
     def testLong(self):
-        b = IntegerIfIntOrLong(1L)
+        b = IntegerIfIntOrLong(1)
         self.assertTrue(isinstance(b, Integer))
 
     def testRational(self):
@@ -346,19 +346,19 @@ class IntegerIfIntOrLongTest (unittest.TestCase):
         self.assertTrue(isinstance(b, Rational))
 
     def testTuple(self):
-        s = IntegerIfIntOrLong((1,1L))
+        s = IntegerIfIntOrLong((1,1))
         self.assertTrue(isinstance(s, tuple))
         for i in s:
             self.assertTrue(isinstance(i, Integer))
 
     def testList(self):
-        s = IntegerIfIntOrLong([1,1L])
+        s = IntegerIfIntOrLong([1,1])
         self.assertTrue(isinstance(s, list))
         for i in s:
             self.assertTrue(isinstance(i, Integer))
 
     def testListOfTuple(self):
-        ss = IntegerIfIntOrLong([(1,1L),(2L,2)])
+        ss = IntegerIfIntOrLong([(1,1),(2,2)])
         self.assertTrue(isinstance(ss, list))
         for s in ss:
             self.assertTrue(isinstance(s, tuple))

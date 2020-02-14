@@ -321,7 +321,7 @@ class MultivarTermOrder (TermOrderInterface):
         if not indices_list:
             raise ValueError("max() arg is an empty sequence")
         it = iter(indices_list)
-        maxi = it.next()
+        maxi = next(it)
         for indices in it:
             if self.comparator(maxi, indices) < 0:
                 maxi = indices

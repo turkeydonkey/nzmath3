@@ -1,4 +1,4 @@
-from __future__ import division
+
 # standard modules
 import itertools
 # NZMATH modules
@@ -158,7 +158,7 @@ class Complex (ring.FieldElement):
     def __neg__(self):
         return self.__class__(-self.real, -self.imag)
 
-    def __nonzero__(self):
+    def __bool__(self):
         return bool(self.real or self.imag)
 
     def __repr__(self):

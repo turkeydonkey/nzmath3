@@ -36,14 +36,14 @@ class RegularContinuedFraction(object):
         self._counter = -1
         self._exhausted = False
         try:
-            initial_term = self._expansion.next()
+            initial_term = next(self._expansion)
             self.numerator = initial_term
             self._counter = 0
         except StopIteration:
             self._exhausted = True
         if not self._exhausted:
             try:
-                first_term = self._expansion.next()
+                first_term = next(self._expansion)
                 self.denominator, self._denominator_old = first_term, 1
                 self.numerator, self._numerator_old = first_term * self.numerator + 1, self.numerator
                 self._counter = 1
@@ -56,7 +56,7 @@ class RegularContinuedFraction(object):
         """
         while not self._exhausted and self._counter < atleast:
             try:
-                element = self._expansion.next()
+                element = next(self._expansion)
             except StopIteration:
                 self._exhausted = True
                 break

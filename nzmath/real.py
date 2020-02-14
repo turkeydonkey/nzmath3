@@ -6,7 +6,7 @@ utilities.  The functions provided are corresponding to the math
 standard module.
 """
 
-from __future__ import division
+
 import itertools
 import warnings
 
@@ -23,7 +23,7 @@ class Real(ring.FieldElement):
     This class is only for consistency for other Ring object.
     """
 
-    convertable = (Float, int, long, rational.Rational)
+    convertable = (Float, int, int, rational.Rational)
 
     def __init__(self, value):
         """
@@ -146,7 +146,7 @@ class RealField(ring.Field):
         return "%s()" % (self.__class__.__name__, )
 
     def __contains__(self, element):
-        if isinstance(element, (int, long, float, Float, Real, rational.Rational)):
+        if isinstance(element, (int, float, Float, Real, rational.Rational)):
             return True
         else:
             try:
@@ -314,7 +314,7 @@ def EulerTransform(iterator):
     l = -1
     for term in iterator:
         stock.append(term)
-        for i in xrange(l, -1, -1):
+        for i in range(l, -1, -1):
             stock[i] += stock[i+1]
         yield b * stock[0]
         b /= 2

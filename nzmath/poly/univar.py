@@ -6,7 +6,7 @@ one tries to manipulate its underlying data attributes, immutability
 will be able to be broken.
 """
 
-from __future__ import division
+
 import warnings
 import nzmath.ring as _ring
 import nzmath.poly.formalsum as formalsum
@@ -61,7 +61,7 @@ class PolynomialInterface(formalsum.FormalSumContainerInterface):
                     mul_coeff[term_degree] += cs*co
                 else:
                     mul_coeff[term_degree] = cs*co
-        return self.construct_with_default(sorted([(d, c) for (d, c) in mul_coeff.iteritems() if c]))
+        return self.construct_with_default(sorted([(d, c) for (d, c) in mul_coeff.items() if c]))
 
     def scalar_mul(self, scale):
         """
@@ -76,7 +76,7 @@ class PolynomialInterface(formalsum.FormalSumContainerInterface):
         Polynomial instance.
         """
         if isinstance(term, PolynomialInterface):
-            degree, coeff = iter(term).next()
+            degree, coeff = next(iter(term))
         else:
             degree, coeff = term
         return self.construct_with_default([(d + degree, c * coeff) for (d, c) in self])
@@ -169,7 +169,7 @@ class BasicPolynomial(PolynomialInterface):
                 sum_coeff[term] += coeff
             else:
                 sum_coeff[term] = coeff
-        return self.construct_with_default([(d, c) for (d, c) in sum_coeff.iteritems() if c])
+        return self.construct_with_default([(d, c) for (d, c) in sum_coeff.items() if c])
 
     def __sub__(self, other):
         """
@@ -181,7 +181,7 @@ class BasicPolynomial(PolynomialInterface):
                 dif_coeff[term] -= coeff
             else:
                 dif_coeff[term] = -coeff
-        return self.construct_with_default([(d, c) for (d, c) in dif_coeff.iteritems() if c])
+        return self.construct_with_default([(d, c) for (d, c) in dif_coeff.items() if c])
 
     def __mul__(self, other):
         """
@@ -239,7 +239,7 @@ class BasicPolynomial(PolynomialInterface):
             (d1, c1), (d2, c2) = self.terms()
             return self.construct_with_default({d1*2:c1**2, d1+d2:c1*c2*2, d2*2:c2**2})
         # general (inefficient)
-        items = self._coefficients.items()
+        items = list(self._coefficients.items())
         fst, snd = {}, {}
         if data_length & 1:
             b, c = items.pop()
@@ -293,7 +293,7 @@ class BasicPolynomial(PolynomialInterface):
         """
         substitution
         """
-        items = self._coefficients.items()
+        items = list(self._coefficients.items())
         if not items:
             return 0*val
         d, c = items.pop()
@@ -308,19 +308,19 @@ class BasicPolynomial(PolynomialInterface):
         The iterator is equivalent to
           zip(self.iterbases(), self.itercoefficients())
         """
-        return self._coefficients.iteritems()
+        return iter(self._coefficients.items())
 
     def itercoefficients(self):
         """
         iterator for coefficients.
         """
-        return self._coefficients.itervalues()
+        return iter(self._coefficients.values())
 
     def iterbases(self):
         """
         iterator for degrees.
         """
-        return self._coefficients.iterkeys()
+        return iter(self._coefficients.keys())
 
     def __getitem__(self, degree):
         """
@@ -373,7 +373,7 @@ class SortedPolynomial (PolynomialInterface):
         PolynomialInterface.__init__(self, coefficients, **kwds)
         self.sorted = []
         if not _sorted or isinstance(coefficients, dict):
-            for t in dict(coefficients).iteritems():
+            for t in dict(coefficients).items():
                 self._insort(t)
         else:
             self.sorted = list(coefficients)
@@ -424,12 +424,12 @@ class SortedPolynomial (PolynomialInterface):
         """
         if self.sorted:
             iter_self = iter(self.sorted)
-            self_term = iter_self.next()
+            self_term = next(iter_self)
         else:
             self_term = None
         if other.sorted:
             iter_other = iter(other.sorted)
-            other_term = iter_other.next()
+            other_term = next(iter_other)
         else:
             other_term = None
         sorted = []
@@ -438,7 +438,7 @@ class SortedPolynomial (PolynomialInterface):
             if compared < 0:
                 sorted.append(self_term)
                 try:
-                    self_term = iter_self.next()
+                    self_term = next(iter_self)
                 except StopIteration:
                     self_term = None
                     break
@@ -447,11 +447,11 @@ class SortedPolynomial (PolynomialInterface):
                 if c:
                     sorted.append((self_term[0], c))
                 try:
-                    self_term = iter_self.next()
+                    self_term = next(iter_self)
                 except StopIteration:
                     self_term = None
                 try:
-                    other_term = iter_other.next()
+                    other_term = next(iter_other)
                 except StopIteration:
                     other_term = None
                 if self_term is None or other_term is None:
@@ -459,7 +459,7 @@ class SortedPolynomial (PolynomialInterface):
             else:
                 sorted.append(other_term)
                 try:
-                    other_term = iter_other.next()
+                    other_term = next(iter_other)
                 except StopIteration:
                     other_term = None
                     break
@@ -481,12 +481,12 @@ class SortedPolynomial (PolynomialInterface):
         """
         if self.sorted:
             iter_self = iter(self.sorted)
-            self_term = iter_self.next()
+            self_term = next(iter_self)
         else:
             self_term = None
         if other.sorted:
             iter_other = iter(other.sorted)
-            other_term = iter_other.next()
+            other_term = next(iter_other)
         else:
             other_term = None
         sorted = []
@@ -495,7 +495,7 @@ class SortedPolynomial (PolynomialInterface):
             if compared < 0:
                 sorted.append(self_term)
                 try:
-                    self_term = iter_self.next()
+                    self_term = next(iter_self)
                 except StopIteration:
                     self_term = None
                     break
@@ -504,11 +504,11 @@ class SortedPolynomial (PolynomialInterface):
                 if c:
                     sorted.append((self_term[0], c))
                 try:
-                    self_term = iter_self.next()
+                    self_term = next(iter_self)
                 except StopIteration:
                     self_term = None
                 try:
-                    other_term = iter_other.next()
+                    other_term = next(iter_other)
                 except StopIteration:
                     other_term = None
                 if self_term is None or other_term is None:
@@ -516,7 +516,7 @@ class SortedPolynomial (PolynomialInterface):
             else:
                 sorted.append((other_term[0], -other_term[1]))
                 try:
-                    other_term = iter_other.next()
+                    other_term = next(iter_other)
                 except StopIteration:
                     other_term = None
                     break

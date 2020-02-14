@@ -4,7 +4,7 @@ Cartesian product
 This module is useful for constructing a direct product of ring.
 """
 
-from __future__ import division
+
 import operator
 import nzmath.cardinality
 

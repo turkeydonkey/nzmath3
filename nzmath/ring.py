@@ -2,7 +2,7 @@
 base classes for rings.
 """
 
-from __future__ import division
+
 
 
 class Ring (object):
@@ -312,7 +312,7 @@ class CommutativeRingElement (RingElement):
             other_ring = getRing(other)
             if self_ring.hasaction(other_ring):
                 return self_ring.getaction(other_ring)(other, self)
-        except RuntimeError, e:
+        except RuntimeError as e:
             #print "mul_module_action", e
             raise
         raise TypeError("no module action with %s" % str(other_ring))
@@ -795,7 +795,7 @@ def getRingInstance(obj):
     """
     if isinstance(obj, RingElement):
         return obj
-    elif isinstance(obj, (int, long)):
+    elif isinstance(obj, int):
         import nzmath.rational as rational
         return rational.Integer(obj)
     elif isinstance(obj, float):
@@ -816,7 +816,7 @@ def getRing(obj):
         # if obj has its getRing method, use it.
         return obj.getRing()
     except AttributeError:
-        if isinstance(obj, (int, long)):
+        if isinstance(obj, int):
             import nzmath.rational as rational
             return rational.theIntegerRing
         if isinstance(obj, float):
@@ -837,7 +837,7 @@ def inverse(obj):
     if hasattr(obj, "inverse"):
         return obj.inverse()
     # special cases
-    if isinstance(obj, (int, long)):
+    if isinstance(obj, int):
         import nzmath.rational as rational
         return rational.Rational(1, obj)
     elif isinstance(obj, (float, complex)):

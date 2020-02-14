@@ -1,4 +1,4 @@
-from __future__ import division
+
 import unittest
 import nzmath.arith1 as arith1
 import nzmath.poly.hensel as hensel

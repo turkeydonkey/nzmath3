@@ -104,7 +104,7 @@ class SemigroupAlgebraElement (object):
                     mul_map[base] += cs*co
                 else:
                     mul_map[base] = cs*co
-        return self.__class__([(d, c) for (d, c) in mul_map.iteritems() if c], self.optype)
+        return self.__class__([(d, c) for (d, c) in mul_map.items() if c], self.optype)
 
     def scalar_mul(self, scale):
         """
@@ -241,7 +241,7 @@ class SemigroupAlgebraElement (object):
                 power_of_2 = power_of_2.square()
         return power_product
 
-    def __nonzero__(self):
+    def __bool__(self):
         """
         if self is not zero, return True.
         """

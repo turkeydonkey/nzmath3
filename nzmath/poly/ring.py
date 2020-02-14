@@ -2,7 +2,7 @@
 base classes for polynomial rings and rational function fields.
 """
 
-from __future__ import division
+
 import nzmath.ring as ring
 import nzmath.poly.termorder as termorder
 import nzmath.poly.univar as univar
@@ -287,7 +287,7 @@ class PolynomialIdeal(ring.Ideal):
             return elem == self.ring.zero
         return not self.reduce(elem)
 
-    def __nonzero__(self):
+    def __bool__(self):
         """
         Report whether the ideal is zero ideal or not.  Of course,
         False is for zero ideal.

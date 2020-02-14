@@ -2,7 +2,7 @@
 rational functions
 """
 
-from __future__ import division
+
 import nzmath.ring as ring
 import nzmath.poly.ring as poly_ring
 

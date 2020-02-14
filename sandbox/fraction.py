@@ -108,7 +108,7 @@ class RingOfFractionsElement (ring.CommutativeRingElement):
     def __str__(self):
         return "%s/%s" % (self.numerator, self.denominator)
 
-    def __nonzero__(self):
+    def __bool__(self):
         return bool(self.numerator)
 
     def __pos__(self):

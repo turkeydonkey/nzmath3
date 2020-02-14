@@ -31,14 +31,14 @@ def aks( n ):
     k = int( lg * lg )
 
     if arith1.powerDetection( n )[ 1 ] != 1: #Power Detection
-        print " n is not prime "
+        print(" n is not prime ")
         return False
 
     start = 3
     while 1:
         d = arith1.gcd.gcd( start , n )
         if 1 < d < n:
-            print "n is not prime"
+            print("n is not prime")
             return False
         x = n % start
         N = x
@@ -52,10 +52,10 @@ def aks( n ):
         start += 1
     d = arith1.gcd.gcd( r , n )
     if 1 < d < n:
-        print " n is not prime "
+        print(" n is not prime ")
         return False
     if n <= r:
-        print " n is prime "
+        print(" n is prime ")
         return True
 
     e = multiplicative.euler( r ) #Cyclotomic Conguence
@@ -74,9 +74,9 @@ def aks( n ):
             count = count >> 1
         total_poly = total.coefficients_to_dict()
         if total_poly != { 0 : b , n % r : 1 }:
-            print  " n is not prime "
+            print(" n is not prime ")
             return False
-    print " n is prime "
+    print(" n is prime ")
     return True
 
 

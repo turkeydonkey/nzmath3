@@ -1,4 +1,4 @@
-from __future__ import division
+
 import os
 import csv
 import logging
@@ -136,9 +136,9 @@ def hilbert(D):
     """
     if HAVE_NET:
         try:
-            import urllib2
+            import urllib.request, urllib.error, urllib.parse
             url = 'http://hilbert-class-polynomial.appspot.com/%d/' % D
-            result = urllib2.urlopen(url).read()
+            result = urllib.request.urlopen(url).read()
             if result == 'null':
                 pass
             else:
