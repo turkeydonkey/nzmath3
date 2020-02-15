@@ -68,6 +68,7 @@ def suite():
             suite.addTest(all_names[name].suite())
     return suite
 
+
 if __name__ == '__main__':
     logging.basicConfig()
     runner = unittest.TextTestRunner()

@@ -274,7 +274,7 @@ def generator_eratosthenes(n):
     Generate primes up to n (inclusive) using Eratosthenes sieve.
     """
     if n < 2:
-        raise StopIteration
+        return
 
     yield 2
     if n <= 2:
@@ -388,7 +388,7 @@ def primeq(n):
         return False
 
     if gcd.gcd(n, PRIMONIAL_31) > 1:
-        return (n in PRIMES_LE_31)
+        return n in PRIMES_LE_31
     if n < 2000000:
         return trialDivision(n)
     if not smallSpsp(n):
@@ -420,13 +420,14 @@ def _isprime(n, pdivisors=None):
     the optional argument pdivisors as a sequence).
     """
     if gcd.gcd(n, PRIMONIAL_31) > 1:
-        return (n in PRIMES_LE_31)
+        return n in PRIMES_LE_31
     elif n < 10 ** 12:
         # 1369 == 37**2
         # 1662803 is the only prime base in smallSpsp which has not checked
         return n < 1369 or n == 1662803 or smallSpsp(n)
     else:
         return full_euler(n, pdivisors)
+
 
 def properDivisors(n):
     """
@@ -451,6 +452,7 @@ def properDivisors(n):
         l.sort()
         return l
 
+
 def _factor(n, bound=0):
     """
     Trial division factorization for a natural number.
@@ -474,12 +476,14 @@ def _factor(n, bound=0):
         factors.append((n, 1))
     return factors
 
+
 def _calc_bound(n, bound=0):
     if bound:
         m = min((bound, arith1.floorsqrt(n)))
     else:
         m = arith1.floorsqrt(n)
     return m
+
 
 def primitive_root(p):
     """

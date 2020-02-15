@@ -292,7 +292,7 @@ def combination_index_generator(n, m):
                     idx[-j] = idx[-j-1] + 1
                 break
         else:
-            raise StopIteration
+            return
 
 
 def permutation_generator(n):
@@ -364,7 +364,7 @@ def dyck_word_generator(n, alphabet=(0, 1)):
     """
     if n == 0:
         yield ()
-        raise StopIteration()
+        return
     else:
         # memo[i] is a list of Dyck words of length 2*i
         memo = [[()]]
@@ -395,7 +395,7 @@ def partition_generator(n, maxi=None):
     """
     if not n:
         yield ()
-        raise StopIteration
+        return
     if maxi is None or maxi > n:
         maxi = n
     partition = [maxi]
@@ -415,7 +415,7 @@ def partition_generator(n, maxi=None):
             first_one = partition.index(1)
             if not first_one:
                 # partition was [1]*n means all partitions have been generated.
-                raise StopIteration
+                return
             rest = len(partition) - first_one
             del partition[first_one:]
         except ValueError:
