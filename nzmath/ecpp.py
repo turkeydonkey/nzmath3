@@ -531,10 +531,9 @@ def disc_gen(absbound=DEFAULT_ABS_BOUND):
         for disc_str in csv.reader(csvfile):
             disc = int(disc_str[0])
             if -disc >= absbound:
-                raise StopIteration("absbound reached")
+                return
             yield disc
         disc = next_disc(disc, absbound)
         while disc:
             yield disc
             disc = next_disc(disc, absbound)
-        raise StopIteration("absbound reached")
