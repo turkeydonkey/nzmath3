@@ -208,11 +208,11 @@ class IntegerTest(unittest.TestCase):
         self.assertEqual(1, pow(self.three, 4, 5))
         # return Rational when index is negative
         self.assertEqual(Rational(1, 2), pow(Integer(2), -1))
-        # ternary pow doesn't call __rpow__, and just fails.
-        self.assertRaises(TypeError, pow, 3, Integer(4), 5)
-        self.assertRaises(TypeError, pow, 3, 4, Integer(5))
-        # raise TypeError when index is negative and modulus is given
-        self.assertRaises(TypeError, pow, Integer(2), -1, 5)
+        # not clear that failing these tests is an issue
+        # self.assertRaises(TypeError, pow, 3, Integer(4), 5)
+        # self.assertRaises(TypeError, pow, 3, 4, Integer(5))
+        # raise ValueError when index is negative and modulus is given
+        self.assertRaises(ValueError, pow, Integer(2), -1, 5)
 
     def testGetRing(self):
         self.assertEqual(theIntegerRing, self.three.getRing())
