@@ -527,14 +527,14 @@ def disc_gen(absbound=DEFAULT_ABS_BOUND):
     If discriminant reach the absbound, then StopIteration will be
     raised.  The default value of absbound is DEFAULT_ABS_BOUND.
     """
-    csvfile = open(os.path.join(DATADIR, "discriminant.csv"))
-    for disc_str in csv.reader(csvfile):
-        disc = int(disc_str[0])
-        if -disc >= absbound:
-            raise StopIteration("absbound reached")
-        yield disc
-    disc = next_disc(disc, absbound)
-    while disc:
-        yield disc
+    with open(os.path.join(DATADIR, "discriminant.csv")) as csvfile:
+        for disc_str in csv.reader(csvfile):
+            disc = int(disc_str[0])
+            if -disc >= absbound:
+                raise StopIteration("absbound reached")
+            yield disc
         disc = next_disc(disc, absbound)
-    raise StopIteration("absbound reached")
+        while disc:
+            yield disc
+            disc = next_disc(disc, absbound)
+        raise StopIteration("absbound reached")
