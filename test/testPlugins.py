@@ -13,7 +13,7 @@ class ModulesTest(unittest.TestCase):
     def testMath(self):
         math_members = ('acos', 'asin', 'atan', 'atan2', 'ceil', 'cos', 'cosh',
                         'degrees', 'e', 'exp', 'fabs', 'floor', 'fmod', 'frexp',
-                        'hypot', 'ldexp', 'log', 'log10', 'modf', 'pi', 'pow',
+                        'hypot', 'ldexp', 'log', 'log10', 'fmod', 'pi', 'pow',
                         'radians', 'sin', 'sinh', 'sqrt', 'tan', 'tanh')
         for member in math_members:
             self.assertTrue(member in dir(math), member)
